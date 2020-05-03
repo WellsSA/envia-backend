@@ -5,6 +5,12 @@ const routes = new Router();
 
 routes.get('/', (req, res) => res.json({ ok: true }));
 
+// simulating auth
+routes.use((req, _, next) => {
+  req.userId = 10;
+  next();
+});
+
 routes.get('/professores', ProfessoresController.index);
 routes.post('/professores', ProfessoresController.store);
 routes.put('/professores/:id', ProfessoresController.update);

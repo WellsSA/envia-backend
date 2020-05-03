@@ -24,12 +24,13 @@ class Professor extends Model {
     return this;
   }
 
-  static associate(models) {
-    this.belongsTo(models.Responsavel, {
-      foreignKey: 'id_escola',
-      as: 'escola',
-    })
-  }
+  // TODO: Adicionar relação
+  // static associate(models) {
+  //   this.belongsTo(models.Escola, {
+  //     foreignKey: 'id_escola',
+  //     as: 'escola',
+  //   })
+  // }
 }
 
 export default Professor;

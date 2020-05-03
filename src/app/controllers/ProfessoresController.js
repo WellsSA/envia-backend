@@ -1,15 +1,11 @@
+import { Professor } from '../models';
+
 class ProfessoresControler {
   async index(req, res) {
-    return res.json([
-      {
-        name: 'Wellington',
-        id: 1,
-      },
-      {
-        name: 'Manoel Teste',
-        id: 2,
-      },
-    ]);
+    const professores = await Professor.findAll();
+    // console.log(test);
+
+    return res.json(professores);
   }
 
   async store(req, res) {
