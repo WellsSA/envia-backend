@@ -1,5 +1,7 @@
 import Professor from './Professor';
+import Escola from './Escola';
 
 export {
-  Professor
+  Professor,
+  Escola
 };

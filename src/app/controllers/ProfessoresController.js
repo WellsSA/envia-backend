@@ -2,7 +2,12 @@ import { Professor } from '../models';
 
 class ProfessoresControler {
   async index(req, res) {
-    const professores = await Professor.findAll();
+    const professores = await Professor.findAll({
+      where: {
+        id_escola: req.userId,
+      },
+      attributes: ['id', 'name'],
+    });
     // console.log(test);
 
     return res.json(professores);

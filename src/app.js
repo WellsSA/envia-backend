@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import * as Youch from 'youch';
+import Youch from 'youch';
 import 'express-async-errors';
 import './database';
 import routes from './routes';
