@@ -17,6 +17,7 @@ module.exports = {
   },
   rules: {
     "prettier/prettier": "error",
-    "no-console": ["error", { allow: ['info']}]
+    "no-console": ["error", { allow: ['info']}],
+    "class-methods-use-this": "off"
   },
 };
