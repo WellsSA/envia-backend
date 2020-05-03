@@ -18,6 +18,7 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "no-console": ["error", { allow: ['info']}],
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }, { "argsIgnorePattern": "next" }]
   },
 };
