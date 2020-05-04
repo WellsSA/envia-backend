@@ -1,22 +1,11 @@
 import { Professor } from '../models';
 import * as Yup from 'yup';
+import { validateSchema, validateId } from '../utils/validation';
 
 const PROFESSOR_SCHEMA = {
   name: Yup.string().required(),
 }
 
-const PROFESSOR_SCHEMA_ID = {
-  ...PROFESSOR_SCHEMA,
-  id: Yup.number().required(),
-}
-
-const validateSchema = async (data, schema, res)  => {
-  const _schema = Yup.object().shape(schema);
-
-  if (!(await _schema.isValid(data))) {
-    return res.status(400).json({ error: 'Bad request' });
-  }
-};
 class ProfessoresControler {
   async index(req, res) {
     const professores = await Professor.findAll({
@@ -32,20 +21,30 @@ class ProfessoresControler {
   async store(req, res) {
     await validateSchema(req.body, PROFESSOR_SCHEMA, res);
 
-    const { name } = req.body;
-    const professor = await Professor.create({
-      name
-    });
+    const professor = await Professor.create({ name: req.body.name, id_escola: req.userId });
 
     return res.json(professor);
   }
 
   async update(req, res) {
-    return res.json({ ok: true });
+    await validateId(req.params.id, res);
+    await validateSchema(req.body, PROFESSOR_SCHEMA, res);
+
+    const [nUpdated] = await Professor.update({ name: req.body.name },{
+      where: { id: req.params.id, id_escola: req.userId }
+    })
+
+    return res.json({ nUpdated });
   }
 
   async delete(req, res) {
-    return res.json({ ok: true });
+    await validateId(req.params.id, res);
+
+    const nDeleted = await Professor.destroy({
+      where: { id: req.params.id, id_escola: req.userId }
+    });
+
+    return res.json({ nDeleted });
   }
 }
 
