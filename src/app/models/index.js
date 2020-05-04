@@ -3,9 +3,4 @@ import Escola from './Escola';
 import Curso from './Curso';
 import Turma from './Turma';
 
-export {
-  Professor,
-  Escola,
-  Curso,
-  Turma
-};
+export { Professor, Escola, Curso, Turma };

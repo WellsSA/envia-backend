@@ -29,7 +29,7 @@ class Curso extends Model {
     this.belongsTo(models.Escola, {
       foreignKey: 'id_escola',
       as: 'escola',
-    })
+    });
   }
 }
 

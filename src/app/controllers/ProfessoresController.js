@@ -4,7 +4,7 @@ import { validateSchema, validateId } from '../utils/validation';
 
 const PROFESSOR_SCHEMA = {
   name: Yup.string().required(),
-}
+};
 
 class ProfessoresControler {
   async index(req, res) {
@@ -21,7 +21,10 @@ class ProfessoresControler {
   async store(req, res) {
     await validateSchema(req.body, PROFESSOR_SCHEMA, res);
 
-    const professor = await Professor.create({ name: req.body.name, id_escola: req.userId });
+    const professor = await Professor.create({
+      name: req.body.name,
+      id_escola: req.userId,
+    });
 
     return res.json(professor);
   }
@@ -30,9 +33,12 @@ class ProfessoresControler {
     await validateId(req.params.id, res);
     await validateSchema(req.body, PROFESSOR_SCHEMA, res);
 
-    const [nUpdated] = await Professor.update({ name: req.body.name },{
-      where: { id: req.params.id, id_escola: req.userId }
-    })
+    const [nUpdated] = await Professor.update(
+      { name: req.body.name },
+      {
+        where: { id: req.params.id, id_escola: req.userId },
+      }
+    );
 
     return res.json({ nUpdated });
   }
@@ -41,7 +47,7 @@ class ProfessoresControler {
     await validateId(req.params.id, res);
 
     const nDeleted = await Professor.destroy({
-      where: { id: req.params.id, id_escola: req.userId }
+      where: { id: req.params.id, id_escola: req.userId },
     });
 
     return res.json({ nDeleted });

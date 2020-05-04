@@ -19,7 +19,6 @@ class Escola extends Model {
 
     return this;
   }
-
 }
 
 export default Escola;

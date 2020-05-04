@@ -31,8 +31,8 @@ class TurmasController {
           model: Professor,
           as: 'teacher',
           attributes: ['id', 'name'],
-        }
-      ]
+        },
+      ],
     });
 
     return res.json(turmas);
@@ -49,7 +49,7 @@ class TurmasController {
       hours,
       id_curso: course.id,
       id_professor: teacher.id,
-      id_escola: req.userId
+      id_escola: req.userId,
     });
 
     return res.json(turma);
@@ -61,15 +61,18 @@ class TurmasController {
 
     const { name, days, hours, course, teacher } = req.body;
 
-    const [nUpdated] = await Turma.update({
-      name,
-      days,
-      hours,
-      id_curso: course.id,
-      id_professor: teacher.id,
-    }, {
-      where: { id: req.params.id, id_escola: req.userId }
-    })
+    const [nUpdated] = await Turma.update(
+      {
+        name,
+        days,
+        hours,
+        id_curso: course.id,
+        id_professor: teacher.id,
+      },
+      {
+        where: { id: req.params.id, id_escola: req.userId },
+      }
+    );
 
     return res.json({ nUpdated });
   }
@@ -78,7 +81,7 @@ class TurmasController {
     await validateId(req.params.id, res);
 
     const nDeleted = await Turma.destroy({
-      where: { id: req.params.id, id_escola: req.userId }
+      where: { id: req.params.id, id_escola: req.userId },
     });
 
     return res.json({ nDeleted });

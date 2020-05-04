@@ -1,5 +1,9 @@
 import { Router } from 'express';
-import { ProfessoresController, CursosController, TurmasController } from './app/controllers';
+import {
+  ProfessoresController,
+  CursosController,
+  TurmasController,
+} from './app/controllers';
 
 const routes = new Router();
 

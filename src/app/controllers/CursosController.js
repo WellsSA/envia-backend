@@ -4,7 +4,7 @@ import { validateSchema, validateId } from '../utils/validation';
 
 const CURSO_SCHEMA = {
   name: Yup.string().required(),
-}
+};
 
 class CursosController {
   async index(req, res) {
@@ -21,7 +21,10 @@ class CursosController {
   async store(req, res) {
     await validateSchema(req.body, CURSO_SCHEMA, res);
 
-    const curso = await Curso.create({ name: req.body.name, id_escola: req.userId });
+    const curso = await Curso.create({
+      name: req.body.name,
+      id_escola: req.userId,
+    });
 
     return res.json(curso);
   }
@@ -30,9 +33,12 @@ class CursosController {
     await validateId(req.params.id, res);
     await validateSchema(req.body, CURSO_SCHEMA, res);
 
-    const [nUpdated] = await Curso.update({ name: req.body.name }, {
-      where: { id: req.params.id, id_escola: req.userId }
-    })
+    const [nUpdated] = await Curso.update(
+      { name: req.body.name },
+      {
+        where: { id: req.params.id, id_escola: req.userId },
+      }
+    );
 
     return res.json({ nUpdated });
   }
@@ -41,7 +47,7 @@ class CursosController {
     await validateId(req.params.id, res);
 
     const nDeleted = await Curso.destroy({
-      where: { id: req.params.id, id_escola: req.userId }
+      where: { id: req.params.id, id_escola: req.userId },
     });
 
     return res.json({ nDeleted });

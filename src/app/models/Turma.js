@@ -1,32 +1,5 @@
 import Sequelize, { Model } from 'sequelize';
 
-
-/*
-endpoint:
-  - id OK
-  - name OK
-  - days
-  - hours
-  - course: {
-    id,
-    name
-  }
-  - teacher: {
-    id,
-    name
-  }
-
-banco:
-
-| id_turma         | int(11)      | NO   | PRI | NULL    | auto_increment |
-| nome_turma       | varchar(50)  | YES  |     | NULL    |                |
-| dias_aulas_turma | varchar(100) | YES  |     | NULL    |                |
-| horarios_turma   | varchar(100) | YES  |     | NULL    |                |
-| id_curso         | int(11)      | YES  | MUL | NULL    |                |
-| id_professor     | int(11)      | YES  | MUL | NULL    |                |
-| id_escola        |
-
-*/
 class Turma extends Model {
   static init(sequelize) {
     super.init(
