@@ -9,6 +9,7 @@ class Professor extends Model {
           allowNull: false,
           primaryKey: true,
           field: 'id_professor',
+          autoIncrement: true,
         },
         name: {
           type: Sequelize.STRING,
