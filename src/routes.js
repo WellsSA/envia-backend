@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ProfessoresController, CursosController } from './app/controllers';
+import { ProfessoresController, CursosController, TurmasController } from './app/controllers';
 
 const routes = new Router();
 
@@ -21,6 +21,11 @@ routes.post('/cursos', CursosController.store);
 routes.put('/cursos/:id', CursosController.update);
 routes.delete('/cursos/:id', CursosController.delete);
 
+routes.get('/turmas', TurmasController.index);
+routes.post('/turmas', TurmasController.store);
+routes.put('/turmas/:id', TurmasController.update);
+routes.delete('/turmas/:id', TurmasController.delete);
+
 export default routes;
 
 /*
@@ -33,11 +38,11 @@ sessions:
       id
     }
 
-professores:
+professores: OK
   - name
   - id
 
-cursos:
+cursos: OK
   - id
   - name
 

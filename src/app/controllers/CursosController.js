@@ -1,4 +1,4 @@
-import { Professor, Curso } from '../models';
+import { Curso } from '../models';
 import * as Yup from 'yup';
 import { validateSchema, validateId } from '../utils/validation';
 
