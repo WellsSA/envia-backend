@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
-import { Professor, Escola } from '../app/models';
+import { Professor, Escola, Curso } from '../app/models';
 
-const models = [Professor, Escola];
+const models = [Professor, Escola, Curso];
 
 class Database {
   constructor() {

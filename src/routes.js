@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ProfessoresController } from './app/controllers';
+import { ProfessoresController, CursosController } from './app/controllers';
 
 const routes = new Router();
 
@@ -15,6 +15,11 @@ routes.get('/professores', ProfessoresController.index);
 routes.post('/professores', ProfessoresController.store);
 routes.put('/professores/:id', ProfessoresController.update);
 routes.delete('/professores/:id', ProfessoresController.delete);
+
+routes.get('/cursos', CursosController.index);
+routes.post('/cursos', CursosController.store);
+routes.put('/cursos/:id', CursosController.update);
+routes.delete('/cursos/:id', CursosController.delete);
 
 export default routes;
 

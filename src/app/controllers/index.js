@@ -1,4 +1,5 @@
-import ProfessoresController from './ProfessoresController';
 import SessionsController from './SessionsController';
+import ProfessoresController from './ProfessoresController';
+import CursosController from './CursosController';
 
-export { SessionsController, ProfessoresController };
+export { SessionsController, ProfessoresController, CursosController };
