@@ -1,4 +1,4 @@
-import { Professor, ModeloMensagem } from '../models';
+import { ModeloMensagem } from '../models';
 import * as Yup from 'yup';
 import { validateSchema, validateId } from '../utils/validation';
 
@@ -14,7 +14,7 @@ class ModelosMensagensController {
       where: {
         id_escola: req.userId,
       },
-      attributes: ['title', 'greeting', 'content'],
+      attributes: ['id', 'title', 'greeting', 'content'],
     });
 
     return res.json(modelos);
