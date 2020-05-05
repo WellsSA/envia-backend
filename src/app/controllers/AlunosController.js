@@ -33,7 +33,7 @@ store:
 
 delete:
  - aluno OK
- - responsavel
+ - responsavel OK
 */
 class AlunosControler {
   async index(req, res) {
@@ -99,9 +99,26 @@ class AlunosControler {
   }
 
   async delete(req, res) {
-    await validateId(req.params.id, res);
+    const { id } = req.params;
 
-    const nDeleted = await Aluno.destroy({
+    if (!(await validateId(id, res))) return;
+
+    const nDeleted = {
+      alunos: 0,
+      responsaveis: 0,
+    };
+
+    const { id_responsavel: responsibleId } = await Aluno.findOne({
+      where: { id, id_escola: req.userId },
+    });
+
+    if (responsibleId !== 1) {
+      nDeleted.responsaveis = await Responsavel.destroy({
+        where: { id: responsibleId },
+      });
+    }
+
+    nDeleted.alunos = await Aluno.destroy({
       where: { id: req.params.id, id_escola: req.userId },
     });
 
