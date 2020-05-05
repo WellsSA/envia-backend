@@ -3,6 +3,7 @@ import {
   ProfessoresController,
   CursosController,
   TurmasController,
+  ModelosMensagensController,
 } from './app/controllers';
 
 const routes = new Router();
@@ -30,6 +31,13 @@ routes.post('/turmas', TurmasController.store);
 routes.put('/turmas/:id', TurmasController.update);
 routes.delete('/turmas/:id', TurmasController.delete);
 
+// alunos
+
+routes.get('/modelosMensagens', ModelosMensagensController.index);
+routes.post('/modelosMensagens', ModelosMensagensController.store);
+routes.put('/modelosMensagens/:id', ModelosMensagensController.update);
+routes.delete('/modelosMensagens/:id', ModelosMensagensController.delete);
+
 export default routes;
 
 /*
@@ -50,7 +58,7 @@ cursos: OK
   - id
   - name
 
-turmas:
+turmas: OK
   - id
   - name
   - days
@@ -74,7 +82,7 @@ alunos:
   - responsible_phone
   - turmas: [ id, id, id, id ] // FIX
 
-modelosMensagens:
+modelosMensagens: OK
   - id
   - title
   - greeting
