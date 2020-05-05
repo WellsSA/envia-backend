@@ -1,4 +1,4 @@
-import { Professor, Aluno, Responsavel } from '../models';
+import { Professor, Aluno, Responsavel, Turma } from '../models';
 import * as Yup from 'yup';
 import { validateSchema, validateId } from '../utils/validation';
 
@@ -19,7 +19,7 @@ const RESPONSAVEL_SCHEMA = {
 index:
  - aluno OK
  - responsavel OK
- - turma
+ - turma OK
 
 store:
  - aluno OK
@@ -48,6 +48,11 @@ class AlunosControler {
           model: Responsavel,
           as: 'responsible',
           attributes: ['id', 'name', 'email', 'phone'],
+        },
+        {
+          model: Turma,
+          as: 'turmas',
+          attributes: ['id', 'name'],
         },
       ],
     });

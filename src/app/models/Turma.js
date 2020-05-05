@@ -48,6 +48,12 @@ class Turma extends Model {
       foreignKey: 'id_professor',
       as: 'teacher',
     });
+
+    this.belongsToMany(models.Aluno, {
+      through: 'turma_alunos',
+      as: 'alunos',
+      foreignKey: 'id_turma',
+    });
   }
 }
 

@@ -47,6 +47,12 @@ class Aluno extends Model {
       foreignKey: 'id_responsavel',
       as: 'responsible',
     });
+
+    this.belongsToMany(models.Turma, {
+      through: 'turma_alunos',
+      as: 'turmas',
+      foreignKey: 'id_aluno',
+    });
   }
 }
 
