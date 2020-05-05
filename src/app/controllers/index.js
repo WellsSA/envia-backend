@@ -3,6 +3,7 @@ import ProfessoresController from './ProfessoresController';
 import CursosController from './CursosController';
 import TurmasController from './TurmasController';
 import ModelosMensagensController from './ModelosMensagensController';
+import EnviosController from './EnviosController';
 
 export {
   SessionsController,
@@ -10,4 +11,5 @@ export {
   CursosController,
   TurmasController,
   ModelosMensagensController,
+  EnviosController,
 };

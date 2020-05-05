@@ -4,6 +4,7 @@ import {
   CursosController,
   TurmasController,
   ModelosMensagensController,
+  EnviosController,
 } from './app/controllers';
 
 const routes = new Router();
@@ -37,6 +38,8 @@ routes.get('/modelosMensagens', ModelosMensagensController.index);
 routes.post('/modelosMensagens', ModelosMensagensController.store);
 routes.put('/modelosMensagens/:id', ModelosMensagensController.update);
 routes.delete('/modelosMensagens/:id', ModelosMensagensController.delete);
+
+routes.get('/ultimosEnvios', EnviosController.index);
 
 export default routes;
 
