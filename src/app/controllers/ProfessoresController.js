@@ -19,7 +19,7 @@ class ProfessoresControler {
   }
 
   async store(req, res) {
-    await validateSchema(req.body, PROFESSOR_SCHEMA, res);
+    if (!(await validateSchema(req.body, PROFESSOR_SCHEMA, res))) return;
 
     const professor = await Professor.create({
       name: req.body.name,
@@ -30,8 +30,8 @@ class ProfessoresControler {
   }
 
   async update(req, res) {
-    await validateId(req.params.id, res);
-    await validateSchema(req.body, PROFESSOR_SCHEMA, res);
+    if (!(await validateId(req.params.id, res))) return;
+    if (!(await validateSchema(req.body, PROFESSOR_SCHEMA, res))) return;
 
     const [nUpdated] = await Professor.update(
       { name: req.body.name },
@@ -44,7 +44,7 @@ class ProfessoresControler {
   }
 
   async delete(req, res) {
-    await validateId(req.params.id, res);
+    if (!(await validateId(req.params.id, res))) return;
 
     const nDeleted = await Professor.destroy({
       where: { id: req.params.id, id_escola: req.userId },

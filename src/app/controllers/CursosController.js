@@ -19,7 +19,7 @@ class CursosController {
   }
 
   async store(req, res) {
-    await validateSchema(req.body, CURSO_SCHEMA, res);
+    if (!(await validateSchema(req.body, CURSO_SCHEMA, res))) return;
 
     const curso = await Curso.create({
       name: req.body.name,
@@ -30,8 +30,8 @@ class CursosController {
   }
 
   async update(req, res) {
-    await validateId(req.params.id, res);
-    await validateSchema(req.body, CURSO_SCHEMA, res);
+    if (!(await validateId(req.params.id, res))) return;
+    if (!(await validateSchema(req.body, CURSO_SCHEMA, res))) return;
 
     const [nUpdated] = await Curso.update(
       { name: req.body.name },
@@ -44,7 +44,7 @@ class CursosController {
   }
 
   async delete(req, res) {
-    await validateId(req.params.id, res);
+    if (!(await validateId(req.params.id, res))) return;
 
     const nDeleted = await Curso.destroy({
       where: { id: req.params.id, id_escola: req.userId },

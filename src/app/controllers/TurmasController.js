@@ -39,7 +39,7 @@ class TurmasController {
   }
 
   async store(req, res) {
-    await validateSchema(req.body, TURMA_SCHEMA, res);
+    if (!(await validateSchema(req.body, TURMA_SCHEMA, res))) return;
 
     const { name, days, hours, course, teacher } = req.body;
 
@@ -56,8 +56,8 @@ class TurmasController {
   }
 
   async update(req, res) {
-    await validateId(req.params.id, res);
-    await validateSchema(req.body, TURMA_SCHEMA, res);
+    if (!(await validateId(req.params.id, res))) return;
+    if (!(await validateSchema(req.body, TURMA_SCHEMA, res))) return;
 
     const { name, days, hours, course, teacher } = req.body;
 
@@ -78,7 +78,7 @@ class TurmasController {
   }
 
   async delete(req, res) {
-    await validateId(req.params.id, res);
+    if (!(await validateId(req.params.id, res))) return;
 
     const nDeleted = await Turma.destroy({
       where: { id: req.params.id, id_escola: req.userId },
