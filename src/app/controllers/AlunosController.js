@@ -1,12 +1,12 @@
 import { Professor, Aluno, Responsavel, Turma } from '../models';
 import * as Yup from 'yup';
 import { validateSchema, validateId } from '../utils/validation';
-
 const ALUNO_SCHEMA = {
   name: Yup.string().required(),
   email: Yup.string().email().required(),
   phone: Yup.number(),
   birthDate: Yup.string().required(),
+  turmas: Yup.array().of(Yup.number()),
 };
 
 const RESPONSAVEL_SCHEMA = {
@@ -24,17 +24,17 @@ index:
 store:
  - aluno OK
  - responsavel OK
- - turma_aluno
+ - turma_aluno OK
 
  update:
  - aluno OK
  - responsavel OK
- - turma_aluno
+ - turma_aluno OK
 
 delete:
  - aluno OK
  - responsavel OK
- - turma_aluno
+ - turma_aluno OK
 */
 class AlunosControler {
   async index(req, res) {
@@ -75,7 +75,7 @@ class AlunosControler {
       });
     }
 
-    const { name, email, phone, birthDate } = req.body;
+    const { name, email, phone, birthDate, turmas } = req.body;
 
     const aluno = await Aluno.create({
       name,
@@ -85,6 +85,10 @@ class AlunosControler {
       id_responsavel: responsavel.id,
       id_escola: req.userId,
     });
+
+    if (turmas && turmas.length) {
+      await aluno.setTurmas(turmas);
+    }
 
     return res.json(aluno);
   }
@@ -96,9 +100,10 @@ class AlunosControler {
     const nUpdated = {
       alunos: 0,
       responsaveis: 0,
+      turmas: 0,
     };
 
-    const { responsible, ...student } = req.body;
+    const { responsible, turmas, ...student } = req.body;
 
     if (responsible && responsible.id !== 1) {
       if (!(await validateId(responsible.id, res))) return;
@@ -123,6 +128,11 @@ class AlunosControler {
       )
     )[0];
 
+    if (turmas && turmas.length) {
+      const aluno = await Aluno.findByPk(req.params.id);
+      nUpdated.turmas = (await aluno.setTurmas(turmas)).length;
+    }
+
     return res.json({ nUpdated });
   }
 
@@ -134,21 +144,27 @@ class AlunosControler {
     const nDeleted = {
       alunos: 0,
       responsaveis: 0,
+      turmas: 0,
     };
 
-    const { id_responsavel: responsibleId } = await Aluno.findOne({
+    const aluno = await Aluno.findOne({
       where: { id, id_escola: req.userId },
     });
+    if (aluno) {
+      const responsibleId = aluno.id_responsavel;
 
-    if (responsibleId !== 1) {
-      nDeleted.responsaveis = await Responsavel.destroy({
-        where: { id: responsibleId },
+      nDeleted.turmas = await aluno.removeTurmas(await aluno.getTurmas());
+
+      if (responsibleId !== 1) {
+        nDeleted.responsaveis = await Responsavel.destroy({
+          where: { id: responsibleId },
+        });
+      }
+
+      nDeleted.alunos = await Aluno.destroy({
+        where: { id: req.params.id, id_escola: req.userId },
       });
     }
-
-    nDeleted.alunos = await Aluno.destroy({
-      where: { id: req.params.id, id_escola: req.userId },
-    });
 
     return res.json({ nDeleted });
   }
