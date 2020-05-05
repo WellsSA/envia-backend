@@ -24,16 +24,17 @@ index:
 store:
  - aluno OK
  - responsavel OK
- - turma
+ - turma_aluno
 
  update:
- - aluno
- - responsavel
- - turma
+ - aluno OK
+ - responsavel OK
+ - turma_aluno
 
 delete:
  - aluno OK
  - responsavel OK
+ - turma_aluno
 */
 class AlunosControler {
   async index(req, res) {
@@ -80,20 +81,42 @@ class AlunosControler {
       id_escola: req.userId,
     });
 
-    // TODO: turmas
     return res.json(aluno);
   }
 
   async update(req, res) {
-    await validateId(req.params.id, res);
-    await validateSchema(req.body, ALUNO_SCHEMA, res);
+    if (!(await validateId(req.params.id, res))) return;
+    if (!(await validateSchema(req.body, ALUNO_SCHEMA, res))) return;
 
-    const [nUpdated] = await Professor.update(
-      { name: req.body.name },
-      {
-        where: { id: req.params.id, id_escola: req.userId },
-      }
-    );
+    const nUpdated = {
+      alunos: 0,
+      responsaveis: 0,
+    };
+
+    const { responsible, ...student } = req.body;
+
+    if (responsible && responsible.id !== 1) {
+      if (!(await validateId(responsible.id, res))) return;
+      if (!(await validateSchema(responsible, RESPONSAVEL_SCHEMA, res))) return;
+
+      nUpdated.responsaveis = (
+        await Responsavel.update(
+          { ...responsible },
+          {
+            where: { id: responsible.id },
+          }
+        )
+      )[0];
+    }
+
+    nUpdated.alunos = (
+      await Aluno.update(
+        { ...student },
+        {
+          where: { id: req.params.id, id_escola: req.userId },
+        }
+      )
+    )[0];
 
     return res.json({ nUpdated });
   }
