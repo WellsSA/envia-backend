@@ -15,6 +15,18 @@ class Aluno extends Model {
           type: Sequelize.STRING,
           field: 'nome_aluno',
         },
+        email: {
+          type: Sequelize.STRING,
+          field: 'email_aluno',
+        },
+        phone: {
+          type: Sequelize.STRING,
+          field: 'celular_aluno',
+        },
+        birthDate: {
+          type: Sequelize.DATE,
+          field: 'data_nascimento',
+        },
       },
       {
         tableName: 'aluno',
@@ -29,6 +41,11 @@ class Aluno extends Model {
     this.belongsTo(models.Escola, {
       foreignKey: 'id_escola',
       as: 'escola',
+    });
+
+    this.belongsTo(models.Responsavel, {
+      foreignKey: 'id_responsavel',
+      as: 'responsible',
     });
   }
 }

@@ -8,9 +8,19 @@ import {
   ModeloMensagem,
   Envio,
   Aluno,
+  Responsavel,
 } from '../app/models';
 
-const models = [Professor, Escola, Curso, Turma, ModeloMensagem, Envio, Aluno];
+const models = [
+  Professor,
+  Escola,
+  Curso,
+  Turma,
+  ModeloMensagem,
+  Envio,
+  Responsavel,
+  Aluno,
+];
 
 class Database {
   constructor() {
