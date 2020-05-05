@@ -7,9 +7,10 @@ import {
   Turma,
   ModeloMensagem,
   Envio,
+  Aluno,
 } from '../app/models';
 
-const models = [Professor, Escola, Curso, Turma, ModeloMensagem, Envio];
+const models = [Professor, Escola, Curso, Turma, ModeloMensagem, Envio, Aluno];
 
 class Database {
   constructor() {

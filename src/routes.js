@@ -5,6 +5,7 @@ import {
   TurmasController,
   ModelosMensagensController,
   EnviosController,
+  AlunosController,
 } from './app/controllers';
 
 const routes = new Router();
@@ -32,7 +33,10 @@ routes.post('/turmas', TurmasController.store);
 routes.put('/turmas/:id', TurmasController.update);
 routes.delete('/turmas/:id', TurmasController.delete);
 
-// alunos
+routes.get('/alunos', AlunosController.index);
+routes.post('/alunos', AlunosController.store);
+routes.put('/alunos/:id', AlunosController.update);
+routes.delete('/alunos/:id', AlunosController.delete);
 
 routes.get('/modelosMensagens', ModelosMensagensController.index);
 routes.post('/modelosMensagens', ModelosMensagensController.store);
@@ -91,7 +95,7 @@ modelosMensagens: OK
   - greeting
   - content
 
-ultimosEnvios:
+ultimosEnvios: OK
   - id
   - sentAt
   - message
