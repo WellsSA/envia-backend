@@ -1,4 +1,7 @@
 import { Router } from 'express';
+
+import authMiddleware from './app/middlewares/auth';
+
 import {
   SessionsController,
   ProfessoresController,
@@ -14,11 +17,7 @@ const routes = new Router();
 routes.get('/', (_, res) => res.json({ hello: true }));
 routes.post('/sessions', SessionsController.index);
 
-// simulating auth
-routes.use((req, _, next) => {
-  req.userId = 10;
-  next();
-});
+routes.use(authMiddleware);
 
 routes.get('/professores', ProfessoresController.index);
 routes.post('/professores', ProfessoresController.store);
