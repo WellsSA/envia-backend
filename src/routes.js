@@ -11,7 +11,7 @@ import {
 
 const routes = new Router();
 
-routes.get('/', (req, res) => res.json({ hello: true }));
+routes.get('/', (_, res) => res.json({ hello: true }));
 routes.post('/sessions', SessionsController.index);
 
 // simulating auth

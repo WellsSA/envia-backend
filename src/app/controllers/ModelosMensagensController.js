@@ -48,7 +48,13 @@ class ModelosMensagensController {
       }
     );
 
-    return res.json({ nUpdated });
+    console.info({ nUpdated });
+
+    const updated = await ModeloMensagem.findByPk(req.params.id, {
+      attributes: ['id', 'title', 'greeting', 'content'],
+    });
+
+    return res.json(updated);
   }
 
   async delete(req, res) {

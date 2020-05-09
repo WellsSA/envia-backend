@@ -74,7 +74,9 @@ class TurmasController {
       }
     );
 
-    const updatedTurma = await Turma.findByPk(req.params.id, {
+    console.info({ nUpdated });
+
+    const updated = await Turma.findByPk(req.params.id, {
       attributes: ['id', 'name', 'days', 'hours'],
       include: [
         {
@@ -90,7 +92,7 @@ class TurmasController {
       ],
     });
 
-    return res.json(updatedTurma);
+    return res.json(updated);
   }
 
   async delete(req, res) {

@@ -40,7 +40,13 @@ class ProfessoresControler {
       }
     );
 
-    return res.json({ nUpdated });
+    console.info({ nUpdated });
+
+    const updated = await Professor.findByPk(req.params.id, {
+      attributes: ['id', 'name'],
+    });
+
+    return res.json(updated);
   }
 
   async delete(req, res) {

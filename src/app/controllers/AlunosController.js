@@ -133,7 +133,25 @@ class AlunosControler {
       nUpdated.turmas = (await aluno.setTurmas(turmas)).length;
     }
 
-    return res.json({ nUpdated });
+    console.info({ nUpdated });
+
+    const updated = await Aluno.findByPk(req.params.id, {
+      attributes: ['id', 'name', 'email', 'phone', 'birthDate'],
+      include: [
+        {
+          model: Responsavel,
+          as: 'responsible',
+          attributes: ['id', 'name', 'email', 'phone'],
+        },
+        {
+          model: Turma,
+          as: 'turmas',
+          attributes: ['id', 'name'],
+        },
+      ],
+    });
+
+    return res.json(updated);
   }
 
   async delete(req, res) {
