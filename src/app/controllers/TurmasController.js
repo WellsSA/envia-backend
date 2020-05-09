@@ -74,7 +74,23 @@ class TurmasController {
       }
     );
 
-    return res.json({ nUpdated });
+    const updatedTurma = await Turma.findByPk(req.params.id, {
+      attributes: ['id', 'name', 'days', 'hours'],
+      include: [
+        {
+          model: Curso,
+          as: 'course',
+          attributes: ['id', 'name'],
+        },
+        {
+          model: Professor,
+          as: 'teacher',
+          attributes: ['id', 'name'],
+        },
+      ],
+    });
+
+    return res.json(updatedTurma);
   }
 
   async delete(req, res) {
