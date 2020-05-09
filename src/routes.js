@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+  SessionsController,
   ProfessoresController,
   CursosController,
   TurmasController,
@@ -10,7 +11,8 @@ import {
 
 const routes = new Router();
 
-routes.get('/', (req, res) => res.json({ ok: true }));
+routes.get('/', (req, res) => res.json({ hello: true }));
+routes.get('/sessions', SessionsController.index);
 
 // simulating auth
 routes.use((req, _, next) => {
