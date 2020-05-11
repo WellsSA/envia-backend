@@ -10,9 +10,14 @@ import {
   ModelosMensagensController,
   EnviosController,
   AlunosController,
+  ImportController,
 } from './app/controllers';
 
+import multer from 'multer';
+import multerConfig from './config/multer';
+
 const routes = new Router();
+const upload = multer(multerConfig);
 
 routes.get('/', (_, res) => res.json({ hello: true }));
 routes.post('/sessions', SessionsController.index);
@@ -45,6 +50,8 @@ routes.put('/modelosMensagens/:id', ModelosMensagensController.update);
 routes.delete('/modelosMensagens/:id', ModelosMensagensController.delete);
 
 routes.get('/ultimosEnvios', EnviosController.index);
+
+routes.post('/import/:kind', upload.single('file'), ImportController.store);
 
 export default routes;
 

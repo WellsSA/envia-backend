@@ -5,6 +5,7 @@ import TurmasController from './TurmasController';
 import ModelosMensagensController from './ModelosMensagensController';
 import EnviosController from './EnviosController';
 import AlunosController from './AlunosController';
+import ImportController from './ImportController';
 
 export {
   SessionsController,
@@ -14,4 +15,5 @@ export {
   ModelosMensagensController,
   EnviosController,
   AlunosController,
+  ImportController,
 };
