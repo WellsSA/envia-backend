@@ -6,6 +6,7 @@ import ModeloMensagem from './ModeloMensagem';
 import Envio from './Envio';
 import Aluno from './Aluno';
 import Responsavel from './Responsavel';
+import Licenca from './Licenca';
 
 export {
   Professor,
@@ -16,4 +17,5 @@ export {
   Envio,
   Aluno,
   Responsavel,
+  Licenca,
 };

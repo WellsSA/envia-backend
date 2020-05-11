@@ -11,6 +11,11 @@ class Escola extends Model {
           primaryKey: true,
           field: 'id_escola',
         },
+        name: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          field: 'nome_escola',
+        },
         email: {
           type: Sequelize.STRING,
           allowNull: false,

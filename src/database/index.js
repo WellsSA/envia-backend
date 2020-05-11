@@ -2,17 +2,19 @@ import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
 import {
   Professor,
+  Licenca,
   Escola,
   Curso,
   Turma,
   ModeloMensagem,
   Envio,
-  Aluno,
   Responsavel,
+  Aluno,
 } from '../app/models';
 
 const models = [
   Professor,
+  Licenca,
   Escola,
   Curso,
   Turma,
