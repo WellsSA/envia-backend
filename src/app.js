@@ -5,6 +5,7 @@ import Youch from 'youch';
 import 'express-async-errors';
 import './database';
 import routes from './routes';
+import path from 'path';
 
 class App {
   constructor() {
@@ -21,10 +22,10 @@ class App {
     // this.server.use(Sentry.Handlers.requestHandler());
     this.server.use(cors({ origin: '*' }));
     this.server.use(express.json());
-    // this.server.use(
-    //   '/files',
-    //   express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
-    // );
+    this.server.use(
+      '/modelos',
+      express.static(path.resolve(__dirname, '..', 'public', 'modelos'))
+    );
   }
 
   routes() {
