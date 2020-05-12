@@ -1,10 +1,6 @@
 import { Professor } from '../models';
-import * as Yup from 'yup';
 import { validateSchema, validateId } from '../utils/validation';
-
-const PROFESSOR_SCHEMA = {
-  name: Yup.string().required(),
-};
+import { PROFESSOR_SCHEMA } from '../utils/schemas';
 
 class ProfessoresControler {
   async index(req, res) {
