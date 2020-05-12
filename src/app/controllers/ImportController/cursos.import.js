@@ -1,15 +1,15 @@
 import { extract } from '../../utils/import';
 import { validateAndInsert } from '../../utils/validation';
-import { Professor } from '../../models';
-import { PROFESSOR_SCHEMA } from '../../utils/schemas';
+import { Curso } from '../../models';
+import { CURSO_SCHEMA } from '../../utils/schemas';
 
 const IMPORT_OPTIONS = {
   skip: 3,
   schema: ['name'],
 };
 
-const schema = PROFESSOR_SCHEMA;
-const model = Professor;
+const schema = CURSO_SCHEMA;
+const model = Curso;
 
 export default async (destination, userId) => {
   const data = await extract(destination, IMPORT_OPTIONS, {

@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { validateSchema } from '../../utils/validation';
-import importProfessoresFrom from './professores.import';
+import importProfessores from './professores.import';
+import importCursos from './cursos.import';
 
 const IMPORT_SCHEMA = {
   kind: Yup.string().required(),
@@ -15,13 +16,13 @@ class ImportController {
 
     const importFunction =
       kind === 'professores'
-        ? importProfessoresFrom
+        ? importProfessores
         : kind === 'cursos'
-        ? importProfessoresFrom
+        ? importCursos
         : kind === 'alunos'
-        ? importProfessoresFrom
+        ? importProfessores
         : kind === 'turmas'
-        ? importProfessoresFrom
+        ? importProfessores
         : undefined;
 
     if (!importFunction) {

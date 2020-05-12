@@ -16,4 +16,19 @@ const validateId = async (id, res) => {
   return validateSchema({ id }, { id: Yup.number().required() }, res);
 };
 
-export { validateSchema, validateId, validateOnlySchema };
+const validateAndInsert = async (data, schema, callback) => {
+  const inserted = [];
+  const errored = [];
+
+  for (const item of data) {
+    if (await validateOnlySchema(item, schema)) {
+      inserted.push(await callback(item));
+    } else {
+      errored.push(item);
+    }
+  }
+
+  return { inserted, errored };
+};
+
+export { validateSchema, validateId, validateOnlySchema, validateAndInsert };
