@@ -1,18 +1,6 @@
 import { Curso, Turma, Professor } from '../models';
-import * as Yup from 'yup';
 import { validateSchema, validateId } from '../utils/validation';
-
-const TURMA_SCHEMA = {
-  name: Yup.string().required(),
-  days: Yup.string(),
-  hours: Yup.string(),
-  course: Yup.object().shape({
-    id: Yup.number().required(),
-  }),
-  teacher: Yup.object().shape({
-    id: Yup.number().required(),
-  }),
-};
+import { TURMA_SCHEMA } from '../utils/schemas';
 
 class TurmasController {
   async index(req, res) {

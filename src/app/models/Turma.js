@@ -26,6 +26,12 @@ class Turma extends Model {
       },
       {
         tableName: 'turma',
+        indexes: [
+          {
+            unique: true,
+            fields: ['id', 'name'],
+          },
+        ],
         sequelize,
       }
     );

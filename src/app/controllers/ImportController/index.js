@@ -2,9 +2,18 @@ import * as Yup from 'yup';
 import { validateSchema } from '../../utils/validation';
 import importProfessores from './professores.import';
 import importCursos from './cursos.import';
+import importTurmas from './turmas.import';
 
 const IMPORT_SCHEMA = {
   kind: Yup.string().required(),
+};
+
+const IMPORT_HANDLER = {
+  professores: importProfessores,
+  cursos: importCursos,
+  turmas: importTurmas,
+  // alunos
+  // modelos
 };
 
 class ImportController {
@@ -14,16 +23,7 @@ class ImportController {
 
     const { kind } = req.params;
 
-    const importFunction =
-      kind === 'professores'
-        ? importProfessores
-        : kind === 'cursos'
-        ? importCursos
-        : kind === 'alunos'
-        ? importProfessores
-        : kind === 'turmas'
-        ? importProfessores
-        : undefined;
+    const importFunction = IMPORT_HANDLER[kind];
 
     if (!importFunction) {
       return res.status(400).json({ error: 'Invalid kind' });
