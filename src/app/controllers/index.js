@@ -6,6 +6,7 @@ import ModelosMensagensController from './ModelosMensagensController';
 import EnviosController from './EnviosController';
 import AlunosController from './AlunosController';
 import ImportController from './ImportController';
+import EmailsController from './EmailsController';
 
 export {
   SessionsController,
@@ -16,4 +17,5 @@ export {
   EnviosController,
   AlunosController,
   ImportController,
+  EmailsController,
 };

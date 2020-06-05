@@ -19,3 +19,15 @@ export const TURMA_SCHEMA = {
     id: Yup.number().required(),
   }),
 };
+
+export const EMAIL_SCHEMA = {
+  filter: Yup.object().shape({
+    criteria: Yup.string().required(),
+  }),
+  message: Yup.object().shape({
+    title: Yup.string().required(),
+    greeting: Yup.string().required(),
+    content: Yup.string().required(),
+  }),
+  to: Yup.array().of(Yup.number()),
+};
