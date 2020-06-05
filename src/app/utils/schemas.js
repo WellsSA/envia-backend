@@ -29,5 +29,8 @@ export const EMAIL_SCHEMA = {
     greeting: Yup.string().required(),
     content: Yup.string().required(),
   }),
-  to: Yup.array().of(Yup.number()),
+  to: Yup.array().of(Yup.number()), // FIXME: make it required
+  options: Yup.object().shape({
+    replyToResponsible: Yup.bool(),
+  }),
 };
