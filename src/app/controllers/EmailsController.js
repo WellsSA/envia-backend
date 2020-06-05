@@ -2,6 +2,7 @@ import { EMAIL_SCHEMA } from '../utils/schemas';
 import { validateSchema } from '../utils/validation';
 import { prepareMessage } from '../utils/mail';
 import { Aluno, Escola, Responsavel } from '../models';
+import CreateMail from '../../jobs/CreateMail';
 
 class EmailsController {
   async store(req, res) {
@@ -37,40 +38,43 @@ class EmailsController {
       attributes: ['name', 'email'],
     });
 
-    await Promise.all(
-      students.map(student => {
-        const { name, email, escola, responsible } = student;
+    students.forEach(async student => {
+      const { name, email, escola, responsible } = student;
 
-        const message = `
+      const message = `
           ${prepareMessage(greeting, name)}
           ${prepareMessage(content, name)}
         `;
 
-        // await Queue.add(SendMail.key, {
-        //   from: `${escola.nome} <${process.env.MAIL_SENDER}>`,
-        //   to: `${nome} <${email}>`,
-        //   subject: titulo,
-        //   text: message,
-        //   replyTo: `${escola.nome} <${escola.email}>`,
-        // });
+      await CreateMail.run({
+        to: 'Wellington Almeida <wel.cavzod@gmail.com>',
+        subject: `Bora lá`,
+        body: 'Envio de email no envia',
+      });
+      // await Queue.add(SendMail.key, {
+      //   from: `${escola.nome} <${process.env.MAIL_SENDER}>`,
+      //   to: `${nome} <${email}>`,
+      //   subject: titulo,
+      //   text: message,
+      //   replyTo: `${escola.nome} <${escola.email}>`,
+      // });
 
-        // if (responsavel.id !== 1) {
-        //   await Queue.add(SendMail.key, {
-        //     from: `${escola.nome} <${process.env.MAIL_SENDER}>`,
-        //     to: `${responsavel.nome} <${responsavel.email}>`,
-        //     subject: titulo,
-        //     text: `
-        //       Olá, segue a cópia da mensagem que enviamos para o aluno ${nome}
-        //       ${message}
-        //     `,
-        //     replyTo: `${escola.nome} <${escola.email}>`,
-        //   });
-        //   responsibleCount++;
-        // }
+      // if (responsavel.id !== 1) {
+      //   await Queue.add(SendMail.key, {
+      //     from: `${escola.nome} <${process.env.MAIL_SENDER}>`,
+      //     to: `${responsavel.nome} <${responsavel.email}>`,
+      //     subject: titulo,
+      //     text: `
+      //       Olá, segue a cópia da mensagem que enviamos para o aluno ${nome}
+      //       ${message}
+      //     `,
+      //     replyTo: `${escola.nome} <${escola.email}>`,
+      //   });
+      //   responsibleCount++;
+      // }
 
-        return 0;
-      })
-    );
+      return 0;
+    });
 
     //  await EnviosEscola.create({
     //   criterio,
