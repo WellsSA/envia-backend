@@ -9,10 +9,11 @@ class SendMail {
     });
   }
 
-  async run({ to, subject, body }) {
+  async run({ from, to, subject, text, replyTo }) {
+    console.log('sending mail...');
     return this.client
       .sendEmail({
-        Source: 'Startup envia <startupenvia@envia.io>',
+        Source: from,
         Destination: {
           ToAddresses: [to],
         },
@@ -22,11 +23,11 @@ class SendMail {
           },
           Body: {
             Text: {
-              Data: body,
+              Data: text,
             },
           },
         },
-        // ReplyToAddress: '',
+        ReplyToAddresses: [replyTo],
         // ConfigurationSetName: '',
       })
       .promise();

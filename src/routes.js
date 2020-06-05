@@ -11,7 +11,7 @@ import {
   EnviosController,
   AlunosController,
   ImportController,
-  EmailsController,
+  SendController,
 } from './app/controllers';
 
 import multer from 'multer';
@@ -53,7 +53,7 @@ routes.delete('/modelosMensagens/:id', ModelosMensagensController.delete);
 routes.get('/ultimosEnvios', EnviosController.index);
 
 routes.post('/import/:kind', upload.single('file'), ImportController.store);
-routes.post('/sendMail', EmailsController.store);
+routes.post('/sendMail', SendController.store);
 
 export default routes;
 

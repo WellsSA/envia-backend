@@ -9,7 +9,6 @@ class EmailsController {
     if (!validateSchema(req.body, EMAIL_SCHEMA, res)) return;
 
     const {
-      filter: { criteria },
       message: { title, greeting, content },
       to,
       options,
@@ -41,39 +40,33 @@ class EmailsController {
     students.forEach(async student => {
       const { name, email, escola, responsible } = student;
 
-      const message = `
-          ${prepareMessage(greeting, name)}
-          ${prepareMessage(content, name)}
+      const message = `${prepareMessage(greeting, name)}\n${prepareMessage(
+        content,
+        name
+      )}
         `;
 
       await CreateMail.run({
-        to: 'Wellington Almeida <wel.cavzod@gmail.com>',
-        subject: `Bora lá`,
-        body: 'Envio de email no envia',
+        from: `${escola.name} <${process.env.MAIL_SENDER}>`,
+        // to: `${name} <${email}>`,
+        to: 'Well <wel.cavzod@gmail.com>',
+        subject: title,
+        text: message,
+        replyTo: `${escola.name} <${escola.email}>`,
       });
-      // await Queue.add(SendMail.key, {
-      //   from: `${escola.nome} <${process.env.MAIL_SENDER}>`,
-      //   to: `${nome} <${email}>`,
-      //   subject: titulo,
-      //   text: message,
-      //   replyTo: `${escola.nome} <${escola.email}>`,
-      // });
 
-      // if (responsavel.id !== 1) {
-      //   await Queue.add(SendMail.key, {
-      //     from: `${escola.nome} <${process.env.MAIL_SENDER}>`,
-      //     to: `${responsavel.nome} <${responsavel.email}>`,
-      //     subject: titulo,
-      //     text: `
-      //       Olá, segue a cópia da mensagem que enviamos para o aluno ${nome}
-      //       ${message}
-      //     `,
-      //     replyTo: `${escola.nome} <${escola.email}>`,
-      //   });
-      //   responsibleCount++;
-      // }
-
-      return 0;
+      if (replyToResponsible && responsible.id !== 1) {
+        const responsibleMessage = `Olá [NOME], segue a cópia da mensagem que enviamos para o aluno ${name}.\n${message}`;
+        await CreateMail.run({
+          from: `${escola.name} <${process.env.MAIL_SENDER}>`,
+          // to: `${responsible.name} <${responsible.email}>`,
+          to: 'Well <wel.cavzod@gmail.com>',
+          subject: `Cópia: ${title}`,
+          text: prepareMessage(responsibleMessage, responsible.name),
+          replyTo: `${escola.name} <${escola.email}>`,
+        });
+        responsibleCount++;
+      }
     });
 
     //  await EnviosEscola.create({

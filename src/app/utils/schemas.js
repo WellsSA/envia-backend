@@ -21,9 +21,6 @@ export const TURMA_SCHEMA = {
 };
 
 export const EMAIL_SCHEMA = {
-  filter: Yup.object().shape({
-    criteria: Yup.string().required(),
-  }),
   message: Yup.object().shape({
     title: Yup.string().required(),
     greeting: Yup.string().required(),
@@ -33,4 +30,12 @@ export const EMAIL_SCHEMA = {
   options: Yup.object().shape({
     replyToResponsible: Yup.bool(),
   }),
+};
+
+export const MESSAGE_SCHEMA = {
+  from: Yup.string().required(),
+  to: Yup.string().required(),
+  subject: Yup.string().required(),
+  text: Yup.string().required(),
+  replyTo: Yup.string().required(),
 };
