@@ -3,10 +3,15 @@ import MercadoPago from 'mercadopago';
 import { CREDIT_PARAMS_SCHEMA, CREDIT_BODY_SCHEMA } from '../../utils/schemas';
 import { validateSchema } from '../../utils/validation';
 import { throwError } from '../../utils/error';
+
 import { Escola } from '../../models';
+import { Orders } from '../../schemas';
+
 import { getPurchaseOrder } from './payment.util';
 import creditData from './credit.data';
+
 import mercadoPagoConfig from '../../../config/mercadopago';
+
 class CreditController {
   async store(req, res) {
     if (!(await validateSchema(req.params, CREDIT_PARAMS_SCHEMA, res))) return;
@@ -23,9 +28,14 @@ class CreditController {
 
     MercadoPago.configure(mercadoPagoConfig);
 
-    console.log((await Escola.findByPk(req.userId)).email);
+    const newOrder = await Orders.create({
+      userId: req.userId,
+      kind: kind,
+      quantity: quantity,
+    });
+
     const purchaseOrder = getPurchaseOrder({
-      id: '123', // mongo objectId
+      id: newOrder._id, // mongo objectId
       title: `${kind} x ${quantity}`,
       quantity: quantity,
       unit_price: creditKind.unitPrice,
