@@ -55,3 +55,9 @@ export const CREDIT_PARAMS_SCHEMA = {
 export const CREDIT_BODY_SCHEMA = {
   quantity: Yup.number().required(),
 };
+
+export const USER_SCHEMA = {
+  name: Yup.string().required(),
+  email: Yup.string().email().required(),
+  password: Yup.string().required(),
+};

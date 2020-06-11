@@ -8,6 +8,7 @@ import AlunosController from './AlunosController';
 import ImportController from './ImportController';
 import SendController from './SendController';
 import CreditController from './CreditController';
+import UsersController from './UsersController';
 
 export {
   SessionsController,
@@ -20,4 +21,5 @@ export {
   ImportController,
   SendController,
   CreditController,
+  UsersController,
 };

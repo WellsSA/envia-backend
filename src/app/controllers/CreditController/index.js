@@ -24,7 +24,9 @@ class CreditController {
 
     if (!creditKind) throwError('Invalid credit kind');
     if (quantity < creditKind.minQuantity)
-      throwError(`The minimum quantity is ${creditKind.minQuantity}`);
+      return res
+        .status(400)
+        .json(throwError(`The minimum quantity is ${creditKind.minQuantity}`));
 
     MercadoPago.configure(mercadoPagoConfig);
 

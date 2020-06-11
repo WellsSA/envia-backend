@@ -13,6 +13,8 @@ import {
   ImportController,
   SendController,
   CreditController,
+  User,
+  UsersController,
 } from './app/controllers';
 
 import multer from 'multer';
@@ -23,8 +25,12 @@ const upload = multer(multerConfig);
 
 routes.get('/', (_, res) => res.json({ hello: true }));
 routes.post('/sessions', SessionsController.index);
+routes.post('/users', UsersController.store);
 
 routes.use(authMiddleware);
+
+routes.put('/users', UsersController.update);
+routes.delete('/users', UsersController.delete);
 
 routes.get('/professores', ProfessoresController.index);
 routes.post('/professores', ProfessoresController.store);

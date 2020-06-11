@@ -10,6 +10,7 @@ class Escola extends Model {
           allowNull: false,
           primaryKey: true,
           field: 'id_escola',
+          autoIncrement: true,
         },
         name: {
           type: Sequelize.STRING,
@@ -24,8 +25,11 @@ class Escola extends Model {
         password: Sequelize.VIRTUAL,
         password_hash: {
           type: Sequelize.STRING,
-          allowNull: false,
           field: 'senha_escola',
+        },
+        active: {
+          type: Sequelize.BOOLEAN,
+          field: 'escola_ativo',
         },
       },
       {
@@ -45,6 +49,13 @@ class Escola extends Model {
 
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
+  }
+
+  static associate(models) {
+    this.belongsTo(models.Licenca, {
+      foreignKey: 'id_licenca',
+      as: 'licence',
+    });
   }
 }
 
