@@ -12,6 +12,7 @@ import {
   AlunosController,
   ImportController,
   SendController,
+  CreditController,
 } from './app/controllers';
 
 import multer from 'multer';
@@ -55,6 +56,8 @@ routes.get('/ultimosEnvios', EnviosController.index);
 routes.post('/import/:kind', upload.single('file'), ImportController.store);
 
 routes.post('/send/:platform', SendController.store);
+
+routes.post('/credit/:kind', CreditController.store);
 
 export default routes;
 

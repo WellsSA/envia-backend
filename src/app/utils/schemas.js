@@ -32,14 +32,26 @@ export const EMAIL_SCHEMA = {
   }),
 };
 
+/* @SEND_CONTROLLER */
 export const SEND_PARAMS_SCHEMA = {
   platform: Yup.string().required(),
 };
 
+/* @SEND_CONTROLLER */
 export const MESSAGE_SCHEMA = {
   from: Yup.string().required(),
   to: Yup.string().required(),
   subject: Yup.string().required(),
   text: Yup.string().required(),
   replyTo: Yup.string().required(),
+};
+
+/* @CREDIT_CONTROLLER */
+export const CREDIT_PARAMS_SCHEMA = {
+  kind: Yup.string().required(),
+};
+
+/* @CREDIT_CONTROLLER */
+export const CREDIT_BODY_SCHEMA = {
+  quantity: Yup.number().required(),
 };
