@@ -32,6 +32,10 @@ export const EMAIL_SCHEMA = {
   }),
 };
 
+export const SEND_PARAMS_SCHEMA = {
+  platform: Yup.string().required(),
+};
+
 export const MESSAGE_SCHEMA = {
   from: Yup.string().required(),
   to: Yup.string().required(),

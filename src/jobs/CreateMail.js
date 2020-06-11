@@ -4,7 +4,7 @@ import { validateOnlySchema } from '../app/utils/validation';
 
 class CreateMail {
   async run(data) {
-    if (!validateOnlySchema(data, MESSAGE_SCHEMA)) {
+    if (!(await validateOnlySchema(data, MESSAGE_SCHEMA))) {
       throw new Error('Invalid Message schema on CreateMail job');
     }
 

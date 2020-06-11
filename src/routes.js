@@ -53,7 +53,8 @@ routes.delete('/modelosMensagens/:id', ModelosMensagensController.delete);
 routes.get('/ultimosEnvios', EnviosController.index);
 
 routes.post('/import/:kind', upload.single('file'), ImportController.store);
-routes.post('/sendMail', SendController.store);
+
+routes.post('/send/:platform', SendController.store);
 
 export default routes;
 
