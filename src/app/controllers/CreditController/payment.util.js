@@ -1,17 +1,10 @@
-const getCurrentURL = req => req.protocol + '://' + req.get('host');
-
-const PAYER = {
-  email: 'comprador@gmail.com',
-};
-
-const MY_PRODUCT = {
-  id: '123',
-  title: 'Um PS4 maroto',
-  quantity: 40,
-  unit_price: 0.1,
-};
-
-const getPurchaseOrder = req => ({
+const getPurchaseOrder = ({
+  id,
+  title,
+  quantity,
+  unit_price,
+  payer_email,
+}) => ({
   items: [
     {
       id: MY_PRODUCT.id,
@@ -28,12 +21,9 @@ const getPurchaseOrder = req => ({
   auto_return: 'all',
   external_reference: MY_PRODUCT.id,
   back_urls: {
-    // success: getCurrentURL(req) + '/payments/success',
-    // pending: getCurrentURL(req) + '/payments/pending',
-    // failure: getCurrentURL(req) + '/payments/failure',
-    success: 'localhost:3000/settings/success',
-    pending: 'localhost:3000/settings/pending',
-    failure: 'localhost:3000/settings/failure',
+    success: process.env.MERCADO_PAGO_BACK_URL + '/settings/success',
+    pending: process.env.MERCADO_PAGO_BACK_URL + '/settings/pending',
+    failure: process.env.MERCADO_PAGO_BACK_URL + '/settings/failure',
   },
 });
 
