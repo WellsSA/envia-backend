@@ -11,4 +11,5 @@ module.exports = {
     underscored: false,
     underscoredAll: false,
   },
+  logging: false,
 };
