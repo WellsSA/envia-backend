@@ -7,19 +7,19 @@ const getPurchaseOrder = ({
 }) => ({
   items: [
     {
-      id: MY_PRODUCT.id,
-      title: MY_PRODUCT.title,
-      description: MY_PRODUCT.title,
-      quantity: MY_PRODUCT.quantity,
+      id: id,
+      title: title,
+      description: title,
+      quantity: +quantity,
       currency_id: 'BRL',
-      unit_price: parseFloat(MY_PRODUCT.unit_price),
+      unit_price: parseFloat(unit_price),
     },
   ],
   payer: {
-    email: PAYER.email,
+    email: payer_email,
   },
   auto_return: 'all',
-  external_reference: MY_PRODUCT.id,
+  external_reference: id,
   back_urls: {
     success: process.env.MERCADO_PAGO_BACK_URL + '/settings/success',
     pending: process.env.MERCADO_PAGO_BACK_URL + '/settings/pending',

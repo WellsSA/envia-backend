@@ -3,7 +3,7 @@ import MercadoPago from 'mercadopago';
 import { CREDIT_PARAMS_SCHEMA, CREDIT_BODY_SCHEMA } from '../../utils/schemas';
 import { validateSchema } from '../../utils/validation';
 import { throwError } from '../../utils/error';
-
+import { Escola } from '../../models';
 import { getPurchaseOrder } from './payment.util';
 import creditData from './credit.data';
 import mercadoPagoConfig from '../../../config/mercadopago';
@@ -23,12 +23,13 @@ class CreditController {
 
     MercadoPago.configure(mercadoPagoConfig);
 
+    console.log((await Escola.findByPk(req.userId)).email);
     const purchaseOrder = getPurchaseOrder({
       id: '123', // mongo objectId
-      title: 'E-mail x 22', // creditKind X Quantity
-      quantity: 40, // request quantity
-      unit_price: 0.05, // creditData unit_price
-      payer_email: 'wel@wel.com', // SQL email based on req.userId
+      title: `${kind} x ${quantity}`,
+      quantity: quantity,
+      unit_price: creditKind.unitPrice,
+      payer_email: (await Escola.findByPk(req.userId)).email,
     });
 
     const preference = await MercadoPago.preferences.create(purchaseOrder);
