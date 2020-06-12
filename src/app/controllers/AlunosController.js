@@ -2,6 +2,7 @@ import { Aluno, Responsavel, Turma } from '../models';
 import { validateSchema, validateId } from '../utils/validation';
 import { ALUNO_SCHEMA, RESPONSAVEL_SCHEMA } from '../utils/schemas';
 import { throwError } from '../utils/error';
+import { EXPECTED_ALUNO } from '../utils/response';
 
 /*
 index:
@@ -30,19 +31,7 @@ class AlunosControler {
       where: {
         id_escola: req.userId,
       },
-      attributes: ['id', 'name', 'email', 'phone', 'birthDate'],
-      include: [
-        {
-          model: Responsavel,
-          as: 'responsible',
-          attributes: ['id', 'name', 'email', 'phone'],
-        },
-        {
-          model: Turma,
-          as: 'turmas',
-          attributes: ['id', 'name'],
-        },
-      ],
+      ...EXPECTED_ALUNO,
     });
 
     return res.json(alunos);
@@ -83,7 +72,9 @@ class AlunosControler {
       await aluno.setTurmas(turmas);
     }
 
-    return res.json(aluno);
+    const response = await Aluno.findByPk(aluno.id, EXPECTED_ALUNO);
+
+    return res.json(response);
   }
 
   async update(req, res) {
@@ -128,23 +119,9 @@ class AlunosControler {
 
     console.info({ nUpdated });
 
-    const updated = await Aluno.findByPk(req.params.id, {
-      attributes: ['id', 'name', 'email', 'phone', 'birthDate'],
-      include: [
-        {
-          model: Responsavel,
-          as: 'responsible',
-          attributes: ['id', 'name', 'email', 'phone'],
-        },
-        {
-          model: Turma,
-          as: 'turmas',
-          attributes: ['id', 'name'],
-        },
-      ],
-    });
+    const response = await Aluno.findByPk(req.params.id, EXPECTED_ALUNO);
 
-    return res.json(updated);
+    return res.json(response);
   }
 
   async delete(req, res) {

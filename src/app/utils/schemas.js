@@ -31,7 +31,7 @@ export const TURMA_SCHEMA = {
 export const ALUNO_SCHEMA = {
   name: Yup.string().required(),
   email: Yup.string().email().required(),
-  phone: Yup.number(),
+  phone: Yup.string(),
   birthDate: Yup.string().required(),
   turmas: Yup.array().of(Yup.number()),
 };
@@ -39,7 +39,7 @@ export const ALUNO_SCHEMA = {
 export const RESPONSAVEL_SCHEMA = {
   name: Yup.string().required(),
   email: Yup.string().email().required(),
-  phone: Yup.number(),
+  phone: Yup.string(),
 };
 
 /* ####### @MODELOS_MENSAGENS_CONTROLLER ####### */
