@@ -13,7 +13,7 @@ class UsersController {
     const alreadyExists = await Escola.findOne({ where: { email } });
 
     if (alreadyExists)
-      return res.status(400).json(throwError('This e-mail is already in use'));
+      return res.status(400).json(throwError('e-mail already in use'));
 
     const user = await Escola.create({ name, email, password });
 
@@ -54,7 +54,7 @@ class UsersController {
     );
 
     if (!nUpdated)
-      return res.status(500).json(throwError('Failed on delete user'));
+      return res.status(500).json(throwError('failed on delete user'));
 
     return res.json({ success: true });
   }

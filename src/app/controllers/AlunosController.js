@@ -1,19 +1,7 @@
-import { Professor, Aluno, Responsavel, Turma } from '../models';
-import * as Yup from 'yup';
+import { Aluno, Responsavel, Turma } from '../models';
 import { validateSchema, validateId } from '../utils/validation';
-const ALUNO_SCHEMA = {
-  name: Yup.string().required(),
-  email: Yup.string().email().required(),
-  phone: Yup.number(),
-  birthDate: Yup.string().required(),
-  turmas: Yup.array().of(Yup.number()),
-};
-
-const RESPONSAVEL_SCHEMA = {
-  name: Yup.string().required(),
-  email: Yup.string().email().required(),
-  phone: Yup.number(),
-};
+import { ALUNO_SCHEMA, RESPONSAVEL_SCHEMA } from '../utils/schemas';
+import { throwError } from '../utils/error';
 
 /*
 index:
@@ -63,6 +51,13 @@ class AlunosControler {
   async store(req, res) {
     if (!(await validateSchema(req.body, ALUNO_SCHEMA, res))) return;
 
+    const { name, email, phone, birthDate, turmas } = req.body;
+
+    const alreadyExists = await Aluno.findOne({ where: { email } });
+
+    if (alreadyExists)
+      return res.status(400).json(throwError('student already exists'));
+
     const { responsible } = req.body;
 
     let responsavel = { id: 1 };
@@ -74,8 +69,6 @@ class AlunosControler {
         ...responsible,
       });
     }
-
-    const { name, email, phone, birthDate, turmas } = req.body;
 
     const aluno = await Aluno.create({
       name,

@@ -1,12 +1,6 @@
 import { ModeloMensagem } from '../models';
-import * as Yup from 'yup';
 import { validateSchema, validateId } from '../utils/validation';
-
-const MODELO_SCHEMA = {
-  title: Yup.string().required(),
-  greeting: Yup.string().required(),
-  content: Yup.string().required(),
-};
+import { MODELO_SCHEMA } from '../utils/schemas';
 
 class ModelosMensagensController {
   async index(req, res) {

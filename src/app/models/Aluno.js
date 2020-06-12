@@ -18,6 +18,7 @@ class Aluno extends Model {
         email: {
           type: Sequelize.STRING,
           field: 'email_aluno',
+          unique: true,
         },
         phone: {
           type: Sequelize.STRING,

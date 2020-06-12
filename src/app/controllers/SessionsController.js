@@ -1,13 +1,9 @@
 import jwt from 'jsonwebtoken';
 import authConfig from '../../config/auth';
-import * as Yup from 'yup';
 import { validateSchema } from '../utils/validation';
+import { SIGN_IN_SCHEMA } from '../utils/schemas';
 import { Escola } from '../models';
 
-const SIGN_IN_SCHEMA = {
-  email: Yup.string().required(),
-  password: Yup.string().required(),
-};
 class SessionsController {
   async index(req, res) {
     if (!(await validateSchema(req.body, SIGN_IN_SCHEMA, res))) return;

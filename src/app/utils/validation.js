@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { throwError } from './error';
 
 const validateOnlySchema = async (data, schema) => {
   const _schema = Yup.object().shape(schema);
@@ -6,10 +7,12 @@ const validateOnlySchema = async (data, schema) => {
 };
 
 const validateSchema = async (data, schema, res) => {
-  if (!(await validateOnlySchema(data, schema))) {
-    return void res.status(400).json({ error: 'Bad request' });
+  try {
+    await Yup.object().shape(schema).validate(data);
+    return true;
+  } catch (error) {
+    return void res.status(400).json(throwError(error.message));
   }
-  return true;
 };
 
 const validateId = async (id, res) => {
