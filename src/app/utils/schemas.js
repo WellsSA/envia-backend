@@ -60,4 +60,5 @@ export const USER_SCHEMA = {
   name: Yup.string().required(),
   email: Yup.string().email().required(),
   password: Yup.string().required(),
+  newPassword: Yup.string(),
 };

@@ -2,25 +2,28 @@ import { Curso, Turma, Professor } from '../models';
 import { validateSchema, validateId } from '../utils/validation';
 import { TURMA_SCHEMA } from '../utils/schemas';
 
+const EXPECTED_DATA = {
+  attributes: ['id', 'name', 'days', 'hours'],
+  include: [
+    {
+      model: Curso,
+      as: 'course',
+      attributes: ['id', 'name'],
+    },
+    {
+      model: Professor,
+      as: 'teacher',
+      attributes: ['id', 'name'],
+    },
+  ],
+};
 class TurmasController {
   async index(req, res) {
     const turmas = await Turma.findAll({
       where: {
         id_escola: req.userId,
       },
-      attributes: ['id', 'name', 'days', 'hours'],
-      include: [
-        {
-          model: Curso,
-          as: 'course',
-          attributes: ['id', 'name'],
-        },
-        {
-          model: Professor,
-          as: 'teacher',
-          attributes: ['id', 'name'],
-        },
-      ],
+      ...EXPECTED_DATA,
     });
 
     return res.json(turmas);
@@ -40,7 +43,9 @@ class TurmasController {
       id_escola: req.userId,
     });
 
-    return res.json(turma);
+    const result = await Turma.findByPk(turma.id, { ...EXPECTED_DATA });
+
+    return res.json(result);
   }
 
   async update(req, res) {
@@ -64,21 +69,7 @@ class TurmasController {
 
     console.info({ nUpdated });
 
-    const updated = await Turma.findByPk(req.params.id, {
-      attributes: ['id', 'name', 'days', 'hours'],
-      include: [
-        {
-          model: Curso,
-          as: 'course',
-          attributes: ['id', 'name'],
-        },
-        {
-          model: Professor,
-          as: 'teacher',
-          attributes: ['id', 'name'],
-        },
-      ],
-    });
+    const updated = await Turma.findByPk(req.params.id, { ...EXPECTED_DATA });
 
     return res.json(updated);
   }
