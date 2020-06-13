@@ -9,6 +9,7 @@ import ImportController from './ImportController';
 import SendController from './SendController';
 import CreditController from './CreditController';
 import UsersController from './UsersController';
+import FiltersController from './FiltersController';
 
 export {
   SessionsController,
@@ -22,4 +23,5 @@ export {
   SendController,
   CreditController,
   UsersController,
+  FiltersController,
 };

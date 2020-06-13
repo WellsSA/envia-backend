@@ -13,8 +13,8 @@ import {
   ImportController,
   SendController,
   CreditController,
-  User,
   UsersController,
+  FiltersController,
 } from './app/controllers';
 
 import multer from 'multer';
@@ -58,6 +58,8 @@ routes.put('/modelosMensagens/:id', ModelosMensagensController.update);
 routes.delete('/modelosMensagens/:id', ModelosMensagensController.delete);
 
 routes.get('/ultimosEnvios', EnviosController.index);
+
+routes.get('/filters/:criteria', FiltersController.index);
 
 routes.post('/import/:kind', upload.single('file'), ImportController.store);
 
