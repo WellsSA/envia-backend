@@ -101,3 +101,9 @@ export const USER_SCHEMA = {
   password: Yup.string().required(),
   newPassword: Yup.string(),
 };
+
+/* ####### @FILTERS_CONTROLLER ####### */
+
+export const FILTER_SCHEMA = {
+  filters: Yup.array().of(Yup.number()).required(),
+};
