@@ -4,14 +4,18 @@ import { throwError } from '../../utils/error';
 
 import alunosFilter from './alunos.filter';
 import turmasFilter from './turmas.filter';
+import professoresFilter from './professores.filter';
+import cursosFilter from './cursos.filter';
+import responsaveisFilter from './responsaveis.filter';
+import todosFilter from './todos.filter';
 
 const FILTERS = {
-  todos: () => ({ error: { message: 'not implemented yet' } }),
+  todos: todosFilter,
   alunos: alunosFilter,
   turmas: turmasFilter,
-  professores: () => ({ error: { message: 'not implemented yet' } }),
-  cursos: () => ({ error: { message: 'not implemented yet' } }),
-  responsaveis: () => ({ error: { message: 'not implemented yet' } }),
+  professores: professoresFilter,
+  cursos: cursosFilter,
+  responsaveis: responsaveisFilter,
 };
 
 class FiltersController {
