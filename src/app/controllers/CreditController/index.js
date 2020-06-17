@@ -5,14 +5,29 @@ import { validateSchema } from '../../utils/validation';
 import { throwError } from '../../utils/error';
 
 import { Escola } from '../../models';
-import { Orders } from '../../schemas';
+import { Orders, Credits } from '../../schemas';
 
 import { getPurchaseOrder } from './payment.util';
-import creditData from './credit.data';
+import CREDIT_DATA from './credit.data';
 
 import mercadoPagoConfig from '../../../config/mercadopago';
 
 class CreditController {
+  async index(req, res) {
+    if (!(await validateSchema(req.params, CREDIT_PARAMS_SCHEMA, res))) return;
+
+    const { kind } = req.params;
+    const { quantity } = req.body;
+
+    const creditKind = CREDIT_DATA[kind];
+
+    const _credits = await Credits.findOne({ userId: req.userId });
+
+    const credits = _credits[creditKind.collectionKind] || 0;
+
+    return res.json({ credits });
+  }
+
   async store(req, res) {
     if (!(await validateSchema(req.params, CREDIT_PARAMS_SCHEMA, res))) return;
     if (!(await validateSchema(req.body, CREDIT_BODY_SCHEMA, res))) return;
@@ -20,7 +35,7 @@ class CreditController {
     const { kind } = req.params;
     const { quantity } = req.body;
 
-    const creditKind = creditData[kind];
+    const creditKind = CREDIT_DATA[kind];
 
     if (!creditKind) throwError('Invalid credit kind');
     if (quantity < creditKind.minQuantity)

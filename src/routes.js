@@ -65,6 +65,7 @@ routes.post('/import/:kind', upload.single('file'), ImportController.store);
 
 routes.post('/send/:platform', SendController.store);
 
+routes.get('/credit/:kind', CreditController.index);
 routes.post('/credit/:kind', CreditController.store);
 
 export default routes;
