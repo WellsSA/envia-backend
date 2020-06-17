@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { validateSchema } from '../../utils/validation';
+import { throwError } from '../../utils/error';
 import importProfessores from './professores.import';
 import importCursos from './cursos.import';
 import importTurmas from './turmas.import';
@@ -19,14 +20,14 @@ const IMPORT_HANDLER = {
 class ImportController {
   async store(req, res) {
     if (!(await validateSchema(req.params, IMPORT_SCHEMA, res))) return;
-    if (!req.file) return res.status(400).json({ error: 'File not found' });
+    if (!req.file) return res.status(400).json(throwError('File not found'));
 
     const { kind } = req.params;
 
     const importFunction = IMPORT_HANDLER[kind];
 
     if (!importFunction) {
-      return res.status(400).json({ error: 'Invalid kind' });
+      return res.status(400).json(throwError('Invalid kind'));
     }
 
     const data = await importFunction(req.file.path, req.userId);

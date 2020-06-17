@@ -21,6 +21,9 @@ class CreditController {
 
     const creditKind = CREDIT_DATA[kind];
 
+    if (!creditKind)
+      return res.status(400).json(throwError("there's not a valid kind"));
+
     const _credits = await Credits.findOne({ userId: req.userId });
 
     const credits = _credits[creditKind.collectionKind] || 0;

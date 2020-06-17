@@ -3,6 +3,7 @@ import authConfig from '../../config/auth';
 import { validateSchema } from '../utils/validation';
 import { SIGN_IN_SCHEMA } from '../utils/schemas';
 import { Escola } from '../models';
+import { throwError } from '../utils/error';
 
 class SessionsController {
   async index(req, res) {
@@ -15,9 +16,11 @@ class SessionsController {
     });
 
     if (!user || !(await user.checkPassword(password))) {
-      return res.status(401).json({
-        error: 'Unauthorized access. Verify your e-mail and password',
-      });
+      return res
+        .status(401)
+        .json(
+          throwError('unauthorized access. verify your e-mail and password')
+        );
     }
 
     return res.json({

@@ -28,7 +28,7 @@ class FiltersController {
     const filter = FILTERS[criteria];
 
     if (!filter)
-      return res.status(400).json(throwError("There's not a valid filter"));
+      return res.status(400).json(throwError("there's not a valid filter"));
 
     const alunos = await filter(filters, req.userId);
 

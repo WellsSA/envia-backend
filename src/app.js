@@ -7,6 +7,8 @@ import './database';
 import routes from './routes';
 import path from 'path';
 
+import { throwError } from './app/utils/error';
+
 class App {
   constructor() {
     this.server = express();
@@ -40,7 +42,7 @@ class App {
         return res.status(500).json(errors);
       }
 
-      return res.status(500).json({ error: 'Internal server error' });
+      return res.status(500).json(throwError('Internal server error'));
     });
   }
 }
