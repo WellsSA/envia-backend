@@ -1,6 +1,6 @@
-const throwError = message => {
+const throwError = (message, data = []) => {
   return {
-    error: { message },
+    error: { message, data },
   };
 };
 

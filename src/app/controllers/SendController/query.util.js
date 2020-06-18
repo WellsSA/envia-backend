@@ -5,6 +5,7 @@ const getStudents = async (ids, userId) =>
       id: ids,
       id_escola: userId,
     },
+    attributes: ['id', 'name', 'email'],
     include: [
       {
         model: Escola,
@@ -17,7 +18,6 @@ const getStudents = async (ids, userId) =>
         attributes: ['id', 'name', 'email'],
       },
     ],
-    attributes: ['name', 'email'],
   });
 
 export { getStudents };

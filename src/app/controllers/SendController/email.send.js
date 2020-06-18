@@ -2,8 +2,18 @@ import { validateOnlySchema } from '../../utils/validation';
 import { EMAIL_SCHEMA } from '../../utils/schemas';
 
 import { prepareMessage } from '../../utils/mail';
+import { throwError } from '../../utils/error';
 
 import CreateMail from '../../../jobs/CreateMail';
+
+const createMail = async ({ from, to, subject, text, replyTo }) => {
+  try {
+    await CreateMail.run({ from, to, subject, text, replyTo });
+    return false;
+  } catch (err) {
+    return throwError('internal system failure');
+  }
+};
 
 export default async (students, req) => {
   if (!(await validateOnlySchema(req.body, EMAIL_SCHEMA))) return;
@@ -16,8 +26,11 @@ export default async (students, req) => {
   const replyToResponsible = options && options.replyToResponsible;
   let responsibleCount = 0;
 
-  students.forEach(async student => {
-    const { name, email, escola, responsible } = student;
+  const errors = [];
+
+  for (const student of students) {
+    const { id, name, email, escola, responsible } = student;
+    console.log('foreach', id, name);
 
     const message = `${prepareMessage(greeting, name)}\n${prepareMessage(
       content,
@@ -25,7 +38,7 @@ export default async (students, req) => {
     )}
       `;
 
-    await CreateMail.run({
+    const hasError = await createMail({
       from: `${escola.name} <${process.env.MAIL_SENDER}>`,
       // to: `${name} <${email}>`,
       to: 'Well <wel.cavzod@gmail.com>', // FIXME: desmockar email
@@ -34,9 +47,15 @@ export default async (students, req) => {
       replyTo: `${escola.name} <${escola.email}>`,
     });
 
+    if (hasError) {
+      errors.push({ student: { id, name }, ...hasError });
+      continue;
+    }
+
     if (replyToResponsible && responsible.id !== 1) {
       const responsibleMessage = `Olá [NOME], segue a cópia da mensagem que enviamos para o aluno ${name}.\n${message}`;
-      await CreateMail.run({
+
+      await createMail({
         from: `${escola.name} <${process.env.MAIL_SENDER}>`,
         // to: `${responsible.name} <${responsible.email}>`,
         to: 'Well <wel.cavzod@gmail.com>', // FIXME: desmockar email
@@ -44,9 +63,10 @@ export default async (students, req) => {
         text: prepareMessage(responsibleMessage, responsible.name),
         replyTo: `${escola.name} <${escola.email}>`,
       });
+
       responsibleCount++;
     }
-  });
+  }
 
   //  await EnviosEscola.create({
   //   criterio,
@@ -58,5 +78,8 @@ export default async (students, req) => {
   //   data_hora_envio:  new Date(),
   //   id_escola: userId
   // });
-  return true;
+
+  console.log({ errors: JSON.stringify(errors) });
+
+  return errors.length ? errors : false;
 };

@@ -21,6 +21,11 @@ class SendController {
     const status = {};
     const students = await getStudents(to, req.userId);
 
+    if (!students.length)
+      return res
+        .status(400)
+        .json(throwError('You need to select at least one student'));
+
     await Promise.all(
       platform.split('+').map(async _platform => {
         const platformHandler = SEND_PLATFORMS[_platform];
@@ -33,14 +38,16 @@ class SendController {
           return (status[_platform] = throwError('not enought credits'));
         }
 
-        if (!(await platformHandler.send(students, req))) {
-          return (status[_platform] = throwError('sending failed'));
+        const hasErrors = await platformHandler.send(students, req);
+
+        if (hasErrors) {
+          return (status[_platform] = throwError('sending failed', hasErrors));
         }
 
         return (status[_platform] = true);
       })
     );
-    return res.json({ status, students });
+    return res.json(status);
   }
 }
 

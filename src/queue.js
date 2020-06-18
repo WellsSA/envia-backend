@@ -3,6 +3,7 @@ import MailQueue from './queues/MailQueue';
 import SendMail from './jobs/SendMail';
 
 try {
+  console.info('MAIL_SENDER: ', process.env.MAIL_SENDER);
   MailQueue.process(async job => SendMail.run(job.data));
   console.info('Starting [MailQueue]...');
 
