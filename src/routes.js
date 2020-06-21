@@ -29,6 +29,7 @@ routes.post('/users', UsersController.store);
 
 routes.use(authMiddleware);
 
+routes.post('/users/image', upload.single('file'), UsersController.image);
 routes.put('/users', UsersController.update);
 routes.delete('/users', UsersController.delete);
 

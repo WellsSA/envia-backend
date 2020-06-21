@@ -58,6 +58,11 @@ class UsersController {
 
     return res.json({ success: true });
   }
+
+  async image(req, res) {
+    console.log({ file: req.file });
+    res.json({ ok: true });
+  }
 }
 
 export default new UsersController();
