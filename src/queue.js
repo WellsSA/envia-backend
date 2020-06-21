@@ -8,10 +8,10 @@ try {
   console.info('Starting [MailQueue]...');
 
   MailQueue.on('completed', (job, result) => {
-    console.log(`Job completed with result ${JSON.stringify(result)}`);
+    console.info(`Job completed with result ${JSON.stringify(result)}`);
   });
   MailQueue.on('failed', (job, err) => {
-    console.log(`Job failed with err ${JSON.stringify(err)}`);
+    console.info(`Job failed with err ${JSON.stringify(err)}`);
   });
 } catch (err) {
   console.error('MailQueueError:', { err });

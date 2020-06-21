@@ -30,7 +30,6 @@ export default async (students, req) => {
 
   for (const student of students) {
     const { id, name, email, escola, responsible } = student;
-    console.log('foreach', id, name);
 
     const message = `${prepareMessage(greeting, name)}\n${prepareMessage(
       content,
@@ -78,8 +77,6 @@ export default async (students, req) => {
   //   data_hora_envio:  new Date(),
   //   id_escola: userId
   // });
-
-  console.log({ errors: JSON.stringify(errors) });
 
   return errors.length ? errors : false;
 };
