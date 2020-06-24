@@ -8,6 +8,7 @@ import professoresFilter from './professores.filter';
 import cursosFilter from './cursos.filter';
 import responsaveisFilter from './responsaveis.filter';
 import todosFilter from './todos.filter';
+import aniversariantesFilter from './aniversariantes.filter';
 
 const FILTERS = {
   todos: todosFilter,
@@ -16,6 +17,7 @@ const FILTERS = {
   professores: professoresFilter,
   cursos: cursosFilter,
   responsaveis: responsaveisFilter,
+  aniversariantes: aniversariantesFilter,
 };
 
 class FiltersController {
