@@ -4,7 +4,13 @@ import SendMail from './jobs/SendMail';
 
 try {
   console.info('MAIL_SENDER: ', process.env.MAIL_SENDER);
-  MailQueue.process(async job => SendMail.run(job.data));
+  MailQueue.process(async job => {
+    try {
+      SendMail.run(job.data);
+    } catch (err) {
+      console.error('@Queue.js/SendMail.run: ', err);
+    }
+  });
   console.info('Starting [MailQueue]...');
 
   MailQueue.on('completed', (job, result) => {
