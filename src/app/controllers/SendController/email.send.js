@@ -31,17 +31,17 @@ export default async (students, req) => {
   for (const student of students) {
     const { id, name, email, escola, responsible } = student;
 
+    const titleF = prepareMessage(title, name);
     const message = `${prepareMessage(greeting, name)}\n${prepareMessage(
       content,
       name
-    )}
-      `;
+    )}`;
 
     const hasError = await createMail({
       from: `${escola.name} <${process.env.MAIL_SENDER}>`,
       // to: `${name} <${email}>`,
       to: 'Well <wel.cavzod@gmail.com>', // FIXME: desmockar email
-      subject: title,
+      subject: titleF,
       text: message,
       replyTo: `${escola.name} <${escola.email}>`,
     });
@@ -58,7 +58,7 @@ export default async (students, req) => {
         from: `${escola.name} <${process.env.MAIL_SENDER}>`,
         // to: `${responsible.name} <${responsible.email}>`,
         to: 'Well <wel.cavzod@gmail.com>', // FIXME: desmockar email
-        subject: `Cópia: ${title}`,
+        subject: `Cópia: ${titleF}`,
         text: prepareMessage(responsibleMessage, responsible.name),
         replyTo: `${escola.name} <${escola.email}>`,
       });
