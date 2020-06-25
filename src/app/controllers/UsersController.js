@@ -40,7 +40,34 @@ class UsersController {
   }
 
   async update(req, res) {
-    return res.status(501).json(throwError('not implemented yet'));
+    if (!(await validateSchema(req.body, USER_SCHEMA, res))) return;
+
+    const { name, email, password, newPassword } = req.body;
+
+    const user = await Escola.findOne({
+      where: { id: req.userId },
+    });
+
+    if (!user || !(await user.checkPassword(password))) {
+      return res
+        .status(401)
+        .json(throwError('unauthorized access. your password does not match'));
+    }
+
+    const passwordObj = newPassword
+      ? { password_hash: await user.hashPassword(newPassword) }
+      : {};
+
+    const [nUpdated] = await Escola.update(
+      { name, email, ...passwordObj },
+      {
+        where: { id: req.userId },
+      }
+    );
+
+    console.info({ nUpdated });
+
+    return res.json({ name, email });
   }
 
   async delete(req, res) {

@@ -47,6 +47,10 @@ class Escola extends Model {
     return this;
   }
 
+  hashPassword(password) {
+    return bcrypt.hash(password, 8);
+  }
+
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }
