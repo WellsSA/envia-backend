@@ -105,5 +105,5 @@ export const USER_SCHEMA = {
 /* ####### @FILTERS_CONTROLLER ####### */
 
 export const FILTER_SCHEMA = {
-  filters: Yup.array().of(Yup.number()).required(),
+  filters: Yup.array().of(Yup.number()),
 };
