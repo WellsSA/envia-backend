@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import authConfig from '../../config/auth';
 import { validateSchema } from '../utils/validation';
 import { SIGN_IN_SCHEMA } from '../utils/schemas';
-import { Escola } from '../models';
+import { Escola, Licenca } from '../models';
 import { throwError } from '../utils/error';
 
 class SessionsController {
@@ -13,6 +13,7 @@ class SessionsController {
 
     const user = await Escola.findOne({
       where: { email },
+      include: [{ model: Licenca, as: 'licence' }],
     });
 
     if (!user || !(await user.checkPassword(password))) {
@@ -27,6 +28,7 @@ class SessionsController {
       user: {
         name: user.name,
         email: user.email,
+        licence: user.licence,
       },
       token: jwt.sign({ id: user.id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
