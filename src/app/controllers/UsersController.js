@@ -5,6 +5,20 @@ import { throwError } from '../utils/error';
 import { addDays } from 'date-fns';
 
 class UsersController {
+  async index(req, res) {
+    const escola = await Escola.findByPk(req.userId, {
+      attributes: ['name', 'email'],
+      include: [
+        {
+          model: Licenca,
+          as: 'licence',
+        },
+      ],
+    });
+
+    return res.json(escola);
+  }
+
   async store(req, res) {
     if (!(await validateSchema(req.body, USER_SCHEMA, res))) return;
 
