@@ -1,6 +1,7 @@
 import { SEND_PARAMS_SCHEMA } from '../../utils/schemas';
 import { validateSchema } from '../../utils/validation';
 import { throwError } from '../../utils/error';
+import { Sents } from '../../schemas';
 
 import { getStudents } from './query.util';
 import sendMail from './email.send';
@@ -15,7 +16,7 @@ const SEND_PLATFORMS = {
 class SendController {
   async store(req, res) {
     if (!(await validateSchema(req.params, SEND_PARAMS_SCHEMA, res))) return;
-    const { to } = req.body;
+    const { to, message, options } = req.body;
     const { platform } = req.params;
 
     const status = {};
@@ -41,8 +42,22 @@ class SendController {
         const hasErrors = await platformHandler.send(students, req);
 
         if (hasErrors) {
-          return (status[_platform] = throwError('sending failed', hasErrors));
+          status[_platform] = throwError('sending failed', hasErrors);
         }
+
+        await Sents.create({
+          userId: req.userId,
+          message: message.title,
+          criteria: (options && options.criteria) || 'ENVIA',
+          platforms: platform,
+          studentsQuantity: students.length,
+          responsibleQuantity: students.reduce(
+            (acc, cur) => (acc += cur.id_responsavel !== '1'),
+            0
+          ),
+          to: students.map(({ id, name }) => ({ id, name })),
+          hasErrors,
+        });
 
         return (status[_platform] = true);
       })

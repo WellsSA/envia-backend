@@ -1,22 +1,30 @@
-import { Envio } from '../models';
+import { Sents } from '../schemas';
 
 class EnviosController {
   async index(req, res) {
-    const envios = await Envio.findAll({
-      where: {
-        id_escola: req.userId,
-      },
-      attributes: [
-        'id',
-        'sentAt',
-        'message',
-        'criteria',
-        'platforms',
-        'studentsQuantity',
-        'responsibleQuantity',
-        'students',
-      ],
-    });
+    const envios = (
+      await Sents.find({
+        userId: 10,
+      })
+    ).map(
+      ({
+        sentAt,
+        message,
+        criteria,
+        platforms,
+        studentsQuantity,
+        responsibleQuantity,
+        to,
+      }) => ({
+        sentAt,
+        message,
+        criteria,
+        platforms,
+        studentsQuantity,
+        responsibleQuantity,
+        to,
+      })
+    );
 
     return res.json(envios);
   }

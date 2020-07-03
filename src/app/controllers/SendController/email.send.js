@@ -67,16 +67,5 @@ export default async (students, req) => {
     }
   }
 
-  //  await EnviosEscola.create({
-  //   criterio,
-  //   plataforma,
-  //   titulo_mensagem: titulo,
-  //   qtd_alunos: alunos.length,
-  //   qtd_responsaveis: responsibleCount,
-  //   alunos: alunos.map(aluno => aluno.nome).join(','),
-  //   data_hora_envio:  new Date(),
-  //   id_escola: userId
-  // });
-
   return errors.length ? errors : false;
 };
