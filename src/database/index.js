@@ -40,11 +40,21 @@ class Database {
   }
 
   mongo() {
-    this.mongoConnection = mongoose.connect(process.env.MONGO_URL, {
-      useNewUrlParser: true,
-      useFindAndModify: true,
-      useUnifiedTopology: true,
-    });
+    const _connect = async () => {
+      try {
+        this.mongoConnection = await mongoose.connect(process.env.MONGO_URL, {
+          useNewUrlParser: true,
+          useFindAndModify: true,
+          useUnifiedTopology: true,
+        });
+        console.info('MongoDB connected!');
+      } catch (err) {
+        console.error('@database/mongo. Error:', err.message);
+        console.info('MongoDB not connected.');
+      }
+    };
+
+    _connect();
   }
 }
 
