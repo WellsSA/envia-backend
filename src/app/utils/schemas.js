@@ -42,6 +42,17 @@ export const RESPONSAVEL_SCHEMA = {
   phone: Yup.string(),
 };
 
+/* ####### @IMPORT_CONTROLLER ####### */
+
+export const IMPORT_ALUNO_SCHEMA = {
+  name: Yup.string().required(),
+  email: Yup.string().email().required(),
+  phone: Yup.string(),
+  birthDate: Yup.string().required(),
+  classes: Yup.string().nullable(),
+  is_responsible: Yup.string().oneOf(['SIM', 'NÃO']).required(),
+};
+
 /* ####### @MODELOS_MENSAGENS_CONTROLLER ####### */
 
 export const MODELO_SCHEMA = {

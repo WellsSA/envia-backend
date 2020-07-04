@@ -5,6 +5,7 @@ import importProfessores from './professores.import';
 import importCursos from './cursos.import';
 import importTurmas from './turmas.import';
 import importModelos from './modelos.import';
+import importAlunos from './alunos.import';
 
 const IMPORT_SCHEMA = {
   kind: Yup.string().required(),
@@ -14,8 +15,8 @@ const IMPORT_HANDLER = {
   professores: importProfessores,
   cursos: importCursos,
   turmas: importTurmas,
+  alunos: importAlunos,
   'modelos de mensagens': importModelos,
-  // modelos
 };
 
 class ImportController {

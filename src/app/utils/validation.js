@@ -24,14 +24,26 @@ const validateAndInsert = async (data, schema, callback) => {
   const errored = [];
 
   for (const item of data) {
-    if (await validateOnlySchema(item, schema)) {
-      inserted.push(await callback(item));
-    } else {
-      errored.push(item);
+    try {
+      await Yup.object().shape(schema).validate(item);
+      await callback(item);
+      inserted.push(item);
+    } catch (error) {
+      console.log({ error });
+      errored.push({ error: error.message });
     }
   }
 
   return { inserted, errored };
 };
 
-export { validateSchema, validateId, validateOnlySchema, validateAndInsert };
+const validateAndThrow = async (data, schema) =>
+  Yup.object().shape(schema).validate(data);
+
+export {
+  validateSchema,
+  validateId,
+  validateOnlySchema,
+  validateAndInsert,
+  validateAndThrow,
+};
