@@ -4,6 +4,7 @@ import { throwError } from '../../utils/error';
 import importProfessores from './professores.import';
 import importCursos from './cursos.import';
 import importTurmas from './turmas.import';
+import importModelos from './modelos.import';
 
 const IMPORT_SCHEMA = {
   kind: Yup.string().required(),
@@ -13,7 +14,7 @@ const IMPORT_HANDLER = {
   professores: importProfessores,
   cursos: importCursos,
   turmas: importTurmas,
-  // alunos
+  'modelos de mensagens': importModelos,
   // modelos
 };
 
@@ -24,6 +25,7 @@ class ImportController {
 
     const { kind } = req.params;
 
+    console.log({ kind });
     const importFunction = IMPORT_HANDLER[kind];
 
     if (!importFunction) {

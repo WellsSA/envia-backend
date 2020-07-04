@@ -35,7 +35,6 @@ export default async (destination, userId) => {
       },
     });
 
-    console.log({ item });
     return model.findOrCreate({
       where: { name, id_escola: userId },
       defaults: {
