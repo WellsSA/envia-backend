@@ -26,7 +26,11 @@ class ModelosMensagensController {
       id_escola: req.userId,
     });
 
-    return res.json(modelo);
+    const created = await ModeloMensagem.findByPk(modelo.id, {
+      attributes: ['id', 'title', 'greeting', 'content'],
+    });
+
+    return res.json(created);
   }
 
   async update(req, res) {
