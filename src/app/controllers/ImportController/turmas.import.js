@@ -43,6 +43,7 @@ export default async (destination, userId) => {
         id_professor: teacher_id,
       },
     });
+
     return [
       {
         id,
