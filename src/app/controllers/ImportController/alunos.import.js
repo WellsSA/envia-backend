@@ -37,18 +37,28 @@ export default async (destination, userId) => {
     } = item;
 
     // 1. search for classes based on their names (splitted by ';')
-    const idsTurmas = [];
+    const turmas = [];
     const responsible = { id: 1 };
+    const responsibleData = {
+      name: responsible_name,
+      email: responsible_email,
+      phone: responsible_phone,
+    };
 
     if (classes) {
       await Promise.all(
         classes.split(';').map(_class => {
           async function search() {
-            const turma = await Turma.findOne({
-              where: { name: _class.trim(), id_escola: userId },
+            const classToSearch = _class.trim();
+            const foundClass = await Turma.findOne({
+              where: { name: classToSearch, id_escola: userId },
             });
 
-            if (turma) idsTurmas.push(turma.id);
+            if (foundClass) turmas.push(foundClass);
+            else
+              throw Error(
+                `Não encontramos a turma ${classToSearch}, mas não se preocupe. Você pode cadastrá-la no Envia e importar esta planilha novamente.`
+              );
           }
 
           return search();
@@ -58,22 +68,16 @@ export default async (destination, userId) => {
 
     // 2. verify if user has responsible or not and insert responsible
     if (is_responsible === 'NÃO') {
-      const data = {
-        name: responsible_name,
-        email: responsible_email,
-        phone: responsible_phone,
-      };
+      await validateAndThrow(responsibleData, RESPONSAVEL_SCHEMA);
 
-      await validateAndThrow(data, RESPONSAVEL_SCHEMA);
-
-      const _responsible = await Responsavel.create(data);
+      const _responsible = await Responsavel.create(responsibleData);
 
       responsible.id = _responsible.id;
     }
 
     // 3. insert student with classes and responsible
-    const [aluno] = await model.findOrCreate({
-      where: { name: student.name, id_escola: userId },
+    const [aluno, isInserted] = await model.findOrCreate({
+      where: { email: student.email, id_escola: userId },
       defaults: {
         ...student,
         id_responsavel: responsible.id,
@@ -81,10 +85,21 @@ export default async (destination, userId) => {
       },
     });
 
-    if (idsTurmas && idsTurmas.length) {
-      await aluno.setTurmas(idsTurmas);
+    if (turmas && turmas.length) {
+      await aluno.setTurmas(turmas.map(({ id }) => id));
     }
 
-    return aluno;
+    return [
+      {
+        id: aluno.id,
+        ...student,
+        responsible: {
+          id: responsible.id,
+          ...responsibleData,
+        },
+        turmas,
+      },
+      isInserted,
+    ];
   });
 };

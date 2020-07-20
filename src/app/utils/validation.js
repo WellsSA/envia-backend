@@ -29,8 +29,7 @@ const validateAndInsert = async (data, schema, callback) => {
       const [data, isInserted] = await callback(item);
       isInserted && inserted.push(data);
     } catch (error) {
-      console.log({ error });
-      errored.push({ error: error.message });
+      errored.push({ item, error: error.message });
     }
   }
 

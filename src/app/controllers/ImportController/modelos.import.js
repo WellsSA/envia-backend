@@ -16,5 +16,10 @@ export default async (destination, userId) => {
     id_escola: userId,
   });
 
-  return validateAndInsert(data, schema, async item => model.create(item));
+  return validateAndInsert(data, schema, async item => {
+    const [{ id, name }, isInserted] = await model.findOrCreate({
+      where: { name: item.name, id_escola: userId },
+    });
+    return [{ id, name }, isInserted];
+  });
 };

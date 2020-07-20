@@ -26,7 +26,7 @@ class CreditController {
 
     const _credits = await Credits.findOne({ userId: req.userId });
 
-    const credits = _credits[creditKind.collectionKind] || 0;
+    const credits = (_credits && _credits[creditKind.collectionKind]) || 0;
 
     return res.json({ credits });
   }
