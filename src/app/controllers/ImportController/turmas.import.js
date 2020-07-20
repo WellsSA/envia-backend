@@ -35,7 +35,7 @@ export default async (destination, userId) => {
       },
     });
 
-    return model.findOrCreate({
+    const [{ id }, isInserted] = await model.findOrCreate({
       where: { name, id_escola: userId },
       defaults: {
         ...turma,
@@ -43,5 +43,21 @@ export default async (destination, userId) => {
         id_professor: teacher_id,
       },
     });
+    return [
+      {
+        id,
+        name,
+        ...turma,
+        teacher: {
+          id: teacher_id,
+          name: teacher_name,
+        },
+        course: {
+          id: course_id,
+          name: course_name,
+        },
+      },
+      isInserted,
+    ];
   });
 };

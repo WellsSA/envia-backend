@@ -4,7 +4,7 @@ class EnviosController {
   async index(req, res) {
     const envios = (
       await Sents.find({
-        userId: 10,
+        userId: req.userId,
       })
     ).map(
       ({
