@@ -10,6 +10,7 @@ import SendController from './SendController';
 import CreditController from './CreditController';
 import UsersController from './UsersController';
 import FiltersController from './FiltersController';
+import ResponsibleController from './ResponsibleController';
 
 export {
   SessionsController,
@@ -24,4 +25,5 @@ export {
   CreditController,
   UsersController,
   FiltersController,
+  ResponsibleController,
 };

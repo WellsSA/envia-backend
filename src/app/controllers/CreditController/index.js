@@ -17,7 +17,6 @@ class CreditController {
     if (!(await validateSchema(req.params, CREDIT_PARAMS_SCHEMA, res))) return;
 
     const { kind } = req.params;
-    const { quantity } = req.body;
 
     const creditKind = CREDIT_DATA[kind];
 

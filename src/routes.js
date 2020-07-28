@@ -15,6 +15,7 @@ import {
   CreditController,
   UsersController,
   FiltersController,
+  ResponsibleController,
 } from './app/controllers';
 
 import multer from 'multer';
@@ -53,6 +54,8 @@ routes.get('/alunos', AlunosController.index);
 routes.post('/alunos', AlunosController.store);
 routes.put('/alunos/:id', AlunosController.update);
 routes.delete('/alunos/:id', AlunosController.delete);
+
+routes.get('/responsaveis', ResponsibleController.index);
 
 routes.get('/modelosMensagens', ModelosMensagensController.index);
 routes.post('/modelosMensagens', ModelosMensagensController.store);
