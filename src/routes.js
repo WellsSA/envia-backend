@@ -16,6 +16,7 @@ import {
   UsersController,
   FiltersController,
   ResponsibleController,
+  PaymentsController,
 } from './app/controllers';
 
 import multer from 'multer';
@@ -27,6 +28,7 @@ const upload = multer(multerConfig);
 routes.get('/', (_, res) => res.json({ hello: true }));
 routes.post('/sessions', SessionsController.index);
 routes.post('/users', UsersController.store);
+routes.post('/payment-notify', PaymentsController.store);
 
 routes.use(authMiddleware);
 

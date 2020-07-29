@@ -11,6 +11,7 @@ import CreditController from './CreditController';
 import UsersController from './UsersController';
 import FiltersController from './FiltersController';
 import ResponsibleController from './ResponsibleController';
+import PaymentsController from './PaymentsController';
 
 export {
   SessionsController,
@@ -26,4 +27,5 @@ export {
   UsersController,
   FiltersController,
   ResponsibleController,
+  PaymentsController,
 };
