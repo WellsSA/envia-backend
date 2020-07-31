@@ -118,3 +118,16 @@ export const USER_SCHEMA = {
 export const FILTER_SCHEMA = {
   filters: Yup.array().of(Yup.number()),
 };
+
+/* ####### @PAYMENTS_CONTROLLER ####### */
+
+export const PAYMENT_QUERY_SCHEMA = {
+  'data.id': Yup.string().required(),
+  type: Yup.string().required(),
+};
+
+export const PAYMENT_API_RESPONSE_SCHEMA = {
+  description: Yup.string().required(),
+  external_reference: Yup.string().required(),
+  status: Yup.string().required(),
+};

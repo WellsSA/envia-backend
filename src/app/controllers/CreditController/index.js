@@ -49,8 +49,9 @@ class CreditController {
 
     const newOrder = await Orders.create({
       userId: req.userId,
-      kind: kind,
+      kind: creditKind.collectionKind,
       quantity: quantity,
+      status: 'pending',
     });
 
     const purchaseOrder = getPurchaseOrder({

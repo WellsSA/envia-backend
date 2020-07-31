@@ -44,7 +44,7 @@ class Database {
       try {
         this.mongoConnection = await mongoose.connect(process.env.MONGO_URL, {
           useNewUrlParser: true,
-          useFindAndModify: true,
+          useFindAndModify: false,
           useUnifiedTopology: true,
         });
         console.info('MongoDB connected!');
