@@ -47,7 +47,8 @@ class PaymentsController {
         // 6. Add credit based on what user purchased
         await Credits.findOneAndUpdate(
           { userId },
-          { $inc: { [kind]: quantity } }
+          { $inc: { [kind]: quantity } },
+          { upsert: true }
         );
         break;
       default:
