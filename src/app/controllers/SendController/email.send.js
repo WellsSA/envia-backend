@@ -6,9 +6,9 @@ import { throwError } from '../../utils/error';
 
 import CreateMail from '../../../jobs/CreateMail';
 
-const createMail = async ({ from, to, subject, text, replyTo }) => {
+const createMail = async ({ from, to, subject, text, replyTo, referrer }) => {
   try {
-    await CreateMail.run({ from, to, subject, text, replyTo });
+    await CreateMail.run({ from, to, subject, text, replyTo, referrer });
     return false;
   } catch (err) {
     return throwError('internal system failure');
@@ -44,6 +44,7 @@ export default async (students, req) => {
       subject: titleF,
       text: message,
       replyTo: `${escola.name} <${escola.email}>`,
+      referrer: req.userId,
     });
 
     if (hasError) {
@@ -61,6 +62,7 @@ export default async (students, req) => {
         subject: `Cópia: ${titleF}`,
         text: prepareMessage(responsibleMessage, responsible.name),
         replyTo: `${escola.name} <${escola.email}>`,
+        referrer: req.userId,
       });
 
       responsibleCount++;

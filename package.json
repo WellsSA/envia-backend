@@ -10,7 +10,7 @@
     "build": "sucrase ./src -d ./build --transforms imports",
     "queue": "node build/queue.js",
     "dev": "nodemon src/server.js",
-    "queue_dev": "sucrase-node src/queue.js"
+    "queue_dev": "nodemon src/queue.js"
   },
   "dependencies": {
     "aws-sdk": "^2.690.0",

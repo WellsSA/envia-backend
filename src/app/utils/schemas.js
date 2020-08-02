@@ -92,6 +92,7 @@ export const MESSAGE_SCHEMA = {
   subject: Yup.string().required(),
   text: Yup.string().required(),
   replyTo: Yup.string().required(),
+  referrer: Yup.number().required(),
 };
 
 /* ####### @CREDIT_CONTROLLER ####### */
@@ -104,6 +105,11 @@ export const CREDIT_BODY_SCHEMA = {
   quantity: Yup.number().required(),
 };
 
+export const CREDIT_JOB_SCHEMA = {
+  referrer: Yup.number().required(),
+  kind: Yup.string().required(),
+  quantity: Yup.number().required(),
+};
 /* ####### @USERS_CONTROLLER ####### */
 
 export const USER_SCHEMA = {
