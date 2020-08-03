@@ -39,8 +39,7 @@ export default async (students, req) => {
 
     const hasError = await createMail({
       from: `${escola.name} <${process.env.MAIL_SENDER}>`,
-      // to: `${name} <${email}>`,
-      to: 'Well <wel.cavzod@gmail.com>', // FIXME: desmockar email
+      to: `${name} <${email}>`,
       subject: titleF,
       text: message,
       replyTo: `${escola.name} <${escola.email}>`,
@@ -57,8 +56,8 @@ export default async (students, req) => {
 
       await createMail({
         from: `${escola.name} <${process.env.MAIL_SENDER}>`,
-        // to: `${responsible.name} <${responsible.email}>`,
-        to: 'Well <wel.cavzod@gmail.com>', // FIXME: desmockar email
+        to: `${responsible.name} <${responsible.email}>`,
+        to: 'Well <wel.cavzod@gmail.com>',
         subject: `Cópia: ${titleF}`,
         text: prepareMessage(responsibleMessage, responsible.name),
         replyTo: `${escola.name} <${escola.email}>`,
