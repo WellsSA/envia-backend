@@ -24,7 +24,6 @@ export default async (students, req) => {
   } = req.body;
 
   const replyToResponsible = options && options.replyToResponsible;
-  let responsibleCount = 0;
 
   const errors = [];
 
@@ -63,8 +62,6 @@ export default async (students, req) => {
         replyTo: `${escola.name} <${escola.email}>`,
         referrer: req.userId,
       });
-
-      responsibleCount++;
     }
   }
 

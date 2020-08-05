@@ -20,4 +20,7 @@ const getStudents = async (ids, userId) =>
     ],
   });
 
-export { getStudents };
+const countReponsible = students =>
+  students.reduce((acc, cur) => (acc += cur.id_responsavel !== '1'), 0);
+
+export { getStudents, countReponsible };

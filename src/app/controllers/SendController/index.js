@@ -5,10 +5,11 @@ import { Sents } from '../../schemas';
 
 import { getStudents } from './query.util';
 import sendMail from './email.send';
+import validateMail from './email.validate';
 
 const SEND_PLATFORMS = {
   email: {
-    validate: async () => true,
+    validate: validateMail,
     send: sendMail,
   },
 };
@@ -35,7 +36,7 @@ class SendController {
           return (status[_platform] = throwError('nonexistent platform'));
         }
 
-        if (!(await platformHandler.validate())) {
+        if (!(await platformHandler.validate(students, req))) {
           return (status[_platform] = throwError('not enought credits'));
         }
 
