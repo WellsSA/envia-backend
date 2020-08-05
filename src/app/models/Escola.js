@@ -31,6 +31,10 @@ class Escola extends Model {
           type: Sequelize.BOOLEAN,
           field: 'escola_ativo',
         },
+        firstAccess: {
+          type: Sequelize.BOOLEAN,
+          field: 'primeiro_acesso',
+        },
       },
       {
         tableName: 'escola',

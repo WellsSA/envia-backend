@@ -28,12 +28,26 @@ class SessionsController {
       user: {
         name: user.name,
         email: user.email,
+        firstAccess: user.firstAccess,
         licence: user.licence,
       },
       token: jwt.sign({ id: user.id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
     });
+  }
+
+  async store(req, res) {
+    await Escola.update(
+      {
+        firstAccess: false,
+      },
+      {
+        where: { id: req.userId },
+      }
+    );
+
+    return res.json({ success: true });
   }
 }
 

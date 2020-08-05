@@ -75,6 +75,8 @@ routes.post('/send/:platform', SendController.store);
 routes.get('/credit/:kind', CreditController.index);
 routes.post('/credit/:kind', CreditController.store);
 
+routes.post('/sessions/firstAccess', SessionsController.store);
+
 export default routes;
 
 /*
