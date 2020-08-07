@@ -21,9 +21,9 @@ const getPurchaseOrder = ({
   auto_return: 'all',
   external_reference: String(id),
   back_urls: {
-    success: process.env.MERCADO_PAGO_BACK_URL + '/settings/success',
-    pending: process.env.MERCADO_PAGO_BACK_URL + '/settings/pending',
-    failure: process.env.MERCADO_PAGO_BACK_URL + '/settings/failure',
+    success: process.env.MERCADO_PAGO_BACK_URL + '/success',
+    pending: process.env.MERCADO_PAGO_BACK_URL + '/pending',
+    failure: process.env.MERCADO_PAGO_BACK_URL + '/failure',
   },
 });
 
