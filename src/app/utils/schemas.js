@@ -91,7 +91,7 @@ export const MESSAGE_SCHEMA = {
   to: Yup.string().required(),
   subject: Yup.string().required(),
   text: Yup.string().required(),
-  replyTo: Yup.string().required(),
+  replyTo: Yup.string(),
   referrer: Yup.number().required(),
 };
 
@@ -136,4 +136,15 @@ export const PAYMENT_API_RESPONSE_SCHEMA = {
   description: Yup.string().required(),
   external_reference: Yup.string().required(),
   status: Yup.string().required(),
+};
+
+/* ####### @FORGOTPASSWORDS_CONTROLLER ####### */
+
+export const FORGOT_PASSWORD_SCHEMA = {
+  email: Yup.string().email().required(),
+};
+
+export const CHANGE_FORGOT_PASSWORD_SCHEMA = {
+  auth: Yup.string().required(),
+  password: Yup.string().required(),
 };

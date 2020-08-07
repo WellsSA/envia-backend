@@ -12,6 +12,7 @@ import UsersController from './UsersController';
 import FiltersController from './FiltersController';
 import ResponsibleController from './ResponsibleController';
 import PaymentsController from './PaymentsController';
+import ForgotPasswordsController from './ForgotPasswordsController';
 
 export {
   SessionsController,
@@ -28,4 +29,5 @@ export {
   FiltersController,
   ResponsibleController,
   PaymentsController,
+  ForgotPasswordsController,
 };

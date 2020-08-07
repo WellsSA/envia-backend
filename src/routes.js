@@ -17,6 +17,7 @@ import {
   FiltersController,
   ResponsibleController,
   PaymentsController,
+  ForgotPasswordsController,
 } from './app/controllers';
 
 import multer from 'multer';
@@ -28,6 +29,9 @@ const upload = multer(multerConfig);
 routes.get('/', (_, res) => res.json({ hello: true }));
 routes.post('/sessions', SessionsController.index);
 routes.post('/users', UsersController.store);
+routes.post('/forgotPassword', ForgotPasswordsController.store);
+routes.put('/forgotPassword', ForgotPasswordsController.update);
+
 routes.post('/payment-notify', PaymentsController.store);
 
 routes.use(authMiddleware);

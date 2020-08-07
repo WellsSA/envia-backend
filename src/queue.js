@@ -35,11 +35,14 @@ try {
   // ############# LISTENERS #############
   MailQueue.on('completed', async job => {
     info(`b<@MailQueue>b: Job [${job.data.replyTo}] g<completed>g.`);
-    await RequestCreditUpdate.run({
-      referrer: job.data.referrer,
-      kind: 'email',
-      quantity: -1,
-    });
+
+    if (job.data.referrer !== -1) {
+      await RequestCreditUpdate.run({
+        referrer: job.data.referrer,
+        kind: 'email',
+        quantity: -1,
+      });
+    }
   });
 
   MailQueue.on('failed', (job, err) => {

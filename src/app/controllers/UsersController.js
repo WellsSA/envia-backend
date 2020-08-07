@@ -58,9 +58,7 @@ class UsersController {
 
     const { name, email, password, newPassword } = req.body;
 
-    const user = await Escola.findOne({
-      where: { id: req.userId },
-    });
+    const user = await Escola.findByPk(req.userId);
 
     if (!user || !(await user.checkPassword(password))) {
       return res
