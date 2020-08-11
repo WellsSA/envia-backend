@@ -18,6 +18,7 @@ import {
   ResponsibleController,
   PaymentsController,
   ForgotPasswordsController,
+  LicensesController,
 } from './app/controllers';
 
 import multer from 'multer';
@@ -31,6 +32,9 @@ routes.post('/sessions', SessionsController.index);
 routes.post('/users', UsersController.store);
 routes.post('/forgotPassword', ForgotPasswordsController.store);
 routes.put('/forgotPassword', ForgotPasswordsController.update);
+
+routes.post('/licenses', LicensesController.store);
+routes.put('/licenses', LicensesController.update);
 
 routes.post('/payment-notify', PaymentsController.store);
 

@@ -1,17 +1,13 @@
-import MercadoPago from 'mercadopago';
-
 import { CREDIT_PARAMS_SCHEMA, CREDIT_BODY_SCHEMA } from '../../utils/schemas';
 import { validateSchema } from '../../utils/validation';
 import { throwError } from '../../utils/error';
 
 import { Escola } from '../../models';
-import { Orders, Credits } from '../../schemas';
+import { Credits } from '../../schemas';
 
-import { getPurchaseOrder } from './payment.util';
 import CREDIT_DATA from './credit.data';
 
-import mercadoPagoConfig from '../../../config/mercadopago';
-
+import OrdersManager from '../../vendor/OrdersManager';
 class CreditController {
   async index(req, res) {
     if (!(await validateSchema(req.params, CREDIT_PARAMS_SCHEMA, res))) return;
@@ -45,16 +41,14 @@ class CreditController {
         .status(400)
         .json(throwError(`The minimum quantity is ${creditKind.minQuantity}`));
 
-    MercadoPago.configure(mercadoPagoConfig);
-
-    const newOrder = await Orders.create({
+    const newOrder = await OrdersManager.storeOrder({
       userId: req.userId,
       kind: creditKind.collectionKind,
       quantity: quantity,
       status: 'pending',
     });
 
-    const purchaseOrder = getPurchaseOrder({
+    const purchaseOrder = OrdersManager.preparePurchaseOrder({
       id: newOrder._id, // mongo objectId
       title: `${kind} x ${quantity}`,
       quantity: quantity,
@@ -62,7 +56,7 @@ class CreditController {
       payer_email: (await Escola.findByPk(req.userId)).email,
     });
 
-    const preference = await MercadoPago.preferences.create(purchaseOrder);
+    const preference = await OrdersManager.createPurchaseOrder(purchaseOrder);
 
     const redirect_url = preference.body.init_point;
 

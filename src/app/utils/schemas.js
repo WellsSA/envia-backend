@@ -148,3 +148,9 @@ export const CHANGE_FORGOT_PASSWORD_SCHEMA = {
   auth: Yup.string().required(),
   password: Yup.string().required(),
 };
+
+/* ####### @LICENSES_CONTROLLER ####### */
+export const LICENSE_REQUEST_SCHEMA = {
+  email: Yup.string().required(),
+  kind: Yup.number().required(),
+};
