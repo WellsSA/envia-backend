@@ -39,6 +39,7 @@ class UsersController {
       end: addDays(today, 7),
       type: 'ENVIA_TRIAL',
       user_id: user.id,
+      history: '7d',
     });
 
     await Escola.update(

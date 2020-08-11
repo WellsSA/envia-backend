@@ -58,6 +58,10 @@ class Licenca extends Model {
           type: Sequelize.NUMBER,
           field: 'id_escola',
         },
+        history: {
+          type: Sequelize.STRING,
+          field: 'historico',
+        },
       },
       {
         tableName: 'licenca',

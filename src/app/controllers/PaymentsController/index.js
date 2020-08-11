@@ -1,16 +1,25 @@
-import { validateSchema } from '../utils/validation';
+import { validateSchema } from '../../utils/validation';
 
 import log from 'log-to-file';
 import axios from 'axios';
 import {
   PAYMENT_QUERY_SCHEMA,
   PAYMENT_API_RESPONSE_SCHEMA,
-} from '../utils/schemas';
+} from '../../utils/schemas';
 
-import { Orders, Credits } from '../schemas';
+import { Orders } from '../../schemas';
+
+import creditHandler from './credit.payment';
+import licenseHandler from './license.payment';
 
 const PAYMENT_STATUS = {
   APPROVED: 'approved',
+};
+
+const KIND_HANDLER = {
+  email: creditHandler,
+  sms: creditHandler,
+  license: licenseHandler,
 };
 
 class PaymentsController {
@@ -44,12 +53,13 @@ class PaymentsController {
           }
         );
 
+        const handler = KIND_HANDLER[kind];
+
+        if (!handler) log(`Not found ${kind}`);
+
         // 6. Add credit based on what user purchased
-        await Credits.findOneAndUpdate(
-          { userId },
-          { $inc: { [kind]: quantity } },
-          { upsert: true }
-        );
+        await handler(userId, kind, quantity);
+
         break;
       default:
         break;
